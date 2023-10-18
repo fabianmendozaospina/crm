@@ -1,26 +1,44 @@
 import { useState } from "preact/hooks";
 
-export default function CustomerNew() {
+export default function NewCustomer() {
+  const [dataValid, setDataValid] = useState(false);
   const [customer, setCustomer] = useState({
     name: "",
-    lastname: "",
+    lastName: "",
     company: "",
     email: "",
     phone: "",
   });
 
-  const handleUpdateState = (e) => {
+  const handleUpdateState = (e: any) => {
     setCustomer({
       ...customer,
       [e.target.name]: e.target.value,
     });
   };
 
-  const validateCustomer = () => {
-    const { name, lastname, email, company, phone } = customer;
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
 
-    const valid: boolean = !name.length || !lastname.length ||
-      !email.length || !company.length || !phone.length;
+    const res = await fetch("http://localhost:8000/api/customers", {
+      method: "POST",
+      body: JSON.stringify(customer),
+    });
+
+    if (res.status != 201) {
+      //return ctx.render(null);
+    }
+
+    const data = await res.json();
+  };
+
+  const validateCustomer = () => {
+    const { name, lastName, email, company, phone } = customer;
+
+    const valid = !(name.length > 0) || !(lastName.length > 0) ||
+      !(email.length > 0) || !(company.length > 0) || !(phone.length > 0);
+
+    console.log(">>> validateCustomer:", valid);
     return valid;
   };
 
@@ -28,7 +46,7 @@ export default function CustomerNew() {
     <>
       <h1 class="font-bold text-gray-800 text-left pl-8">New Customer</h1>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <legend>Fill out all fields</legend>
 
         <div class="campo">
@@ -46,7 +64,7 @@ export default function CustomerNew() {
           <input
             type="text"
             placeholder="Customer last name"
-            name="lastname"
+            name="lastName"
             onChange={handleUpdateState}
           />
         </div>
@@ -86,7 +104,7 @@ export default function CustomerNew() {
             type="submit"
             class="btn btn-azul"
             value="Add Customer"
-            disabled={validateCustomer()}
+            // disabled={validateCustomer()}
           />
         </div>
       </form>

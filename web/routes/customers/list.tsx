@@ -1,6 +1,6 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Layout from "../../components/layout/index.tsx";
-import Customer from "../../islands/Customer.tsx";
+import Customer from "../../islands/customers/Customer.tsx";
 
 export const handler: Handlers = {
   async GET(_, ctx) {
@@ -17,7 +17,7 @@ export const handler: Handlers = {
   },
 };
 
-export default function All({ data }: PageProps) {
+export default function List({ data }: PageProps) {
   const { customers } = data;
   return (
     <Layout>

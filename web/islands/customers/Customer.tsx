@@ -1,4 +1,4 @@
-export default function Customers(props: { key: number; data: any }) {
+export default function Customer(props: { key: number; data: any }) {
   const { name, lastName, company, email, phone } = props.data;
 
   return (
