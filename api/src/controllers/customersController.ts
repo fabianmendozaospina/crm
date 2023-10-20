@@ -91,10 +91,14 @@ export const postCustomer = async (
   ctx: Context,
   next: () => Promise<unknown>,
 ) => {
-  let response = {};
   const body = ctx.request.body();
-  const data = await body.value;
+  let response = {};
+  let data = await body.value;
   console.log("Adding a customer");
+
+  if (typeof data == "string") {
+    data = JSON.parse(data);
+  }
 
   try {
     const { data: customer, error } = await supabase
@@ -102,8 +106,8 @@ export const postCustomer = async (
       .insert(data)
       .select();
 
-    if (error) {
-      throw new Error(error.message);
+    if (error || customer.length == 0) {
+      throw new Error(error?.message);
     }
 
     response = {
