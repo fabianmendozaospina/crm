@@ -1,7 +1,6 @@
 import { useState } from "preact/hooks";
 
 export default function NewCustomer() {
-  const [dataValid, setDataValid] = useState(false);
   const [customer, setCustomer] = useState({
     name: "",
     lastName: "",
@@ -18,6 +17,8 @@ export default function NewCustomer() {
   };
 
   const handleSubmit = async (e: any) => {
+    // disabled={validateCustomer()}
+    console.log("siiiii");
     e.preventDefault();
 
     const res = await fetch("http://localhost:8000/api/customers", {
@@ -32,15 +33,15 @@ export default function NewCustomer() {
     const data = await res.json();
   };
 
-  const validateCustomer = () => {
-    const { name, lastName, email, company, phone } = customer;
+  // const validateCustomer = () => {
+  //   const { name, lastName, email, company, phone } = customer;
 
-    const valid = !(name.length > 0) || !(lastName.length > 0) ||
-      !(email.length > 0) || !(company.length > 0) || !(phone.length > 0);
+  //   const valid = !(name.length > 0) || !(lastName.length > 0) ||
+  //     !(email.length > 0) || !(company.length > 0) || !(phone.length > 0);
 
-    console.log(">>> validateCustomer:", valid);
-    return valid;
-  };
+  //   console.log(">>> validateCustomer:", valid);
+  //   return valid;
+  // };con gusto
 
   return (
     <>
@@ -92,7 +93,7 @@ export default function NewCustomer() {
         <div class="campo">
           <label>Phone:</label>
           <input
-            type="email"
+            type="text"
             placeholder="Customer phone"
             name="phone"
             onChange={handleUpdateState}
@@ -102,9 +103,9 @@ export default function NewCustomer() {
         <div class="enviar">
           <input
             type="submit"
-            class="btn btn-azul"
+            class="btn btn-a7.1zul"
             value="Add Customer"
-            // disabled={validateCustomer()}
+            style={"cursor: pointer"}
           />
         </div>
       </form>

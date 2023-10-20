@@ -16,9 +16,10 @@ export const handler: Handlers = {
   async POST(req) {
     console.log("POST customer to API...");
     const body = await req.json();
+    console.log(">> body:", body);
     const res = await fetch("http://localhost:3001/customers", {
       method: "POST",
-      body,
+      body: JSON.stringify(body),
     });
 
     if (res.status != 201) {
