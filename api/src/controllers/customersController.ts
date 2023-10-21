@@ -16,7 +16,7 @@ export const getCustomers = async (
       .select("*");
 
     if (error) {
-      throw new Error(error.message);
+      throw new Error(JSON.stringify(error));
     }
 
     if (!customers || customers.length == 0) {
@@ -38,7 +38,9 @@ export const getCustomers = async (
   } catch (error) {
     response = {
       success: false,
-      error: error.message || error,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
     };
     ctx.response.status = 500;
     ctx.response.body = response;
@@ -51,16 +53,16 @@ export const getCustomer = async (ctx: any, next: () => Promise<unknown>) => {
   console.log("Getting a customer");
 
   try {
-    const { data: customer, error } = await supabase
+    const { data: customers, error } = await supabase
       .from("customers")
       .select("*")
       .eq("id", ctx.params.id);
 
     if (error) {
-      throw new Error(error.message);
+      throw new Error(JSON.stringify(error));
     }
 
-    if (!customer || customer.length == 0) {
+    if (!customers || customers.length == 0) {
       response = {
         success: false,
         description: "no data was obtained",
@@ -72,14 +74,16 @@ export const getCustomer = async (ctx: any, next: () => Promise<unknown>) => {
 
     response = {
       success: true,
-      customer,
+      customer: customers[0],
     };
     ctx.response.status = 200;
     ctx.response.body = response;
   } catch (error) {
     response = {
       success: false,
-      error: error.message || error,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
     };
     ctx.response.status = 500;
     ctx.response.body = response;
@@ -101,25 +105,27 @@ export const postCustomer = async (
   }
 
   try {
-    const { data: customer, error } = await supabase
+    const { data: customers, error } = await supabase
       .from("customers")
       .insert(data)
       .select();
 
-    if (error || customer.length == 0) {
-      throw new Error(error?.message);
+    if (error || customers.length == 0) {
+      throw new Error(JSON.stringify(error));
     }
 
     response = {
       success: true,
-      customer,
+      customer: customers[0],
     };
     ctx.response.status = 201;
     ctx.response.body = response;
   } catch (error) {
     response = {
       success: false,
-      error: error.message || error,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
     };
     ctx.response.status = 500;
     ctx.response.body = response;
@@ -128,23 +134,27 @@ export const postCustomer = async (
 };
 
 export const putCustomer = async (ctx: any, next: () => Promise<unknown>) => {
-  let response = {};
   const body = ctx.request.body();
-  const data = await body.value;
+  let response = {};
+  let data = await body.value;
   console.log("Updating a customer");
 
+  if (typeof data == "string") {
+    data = JSON.parse(data);
+  }
+
   try {
-    const { data: customer, error } = await supabase
+    const { data: customers, error } = await supabase
       .from("customers")
       .update(data)
       .eq("id", ctx.params.id)
       .select();
 
     if (error) {
-      throw new Error(error.message);
+      throw new Error(JSON.stringify(error));
     }
 
-    if (!customer || customer.length == 0) {
+    if (!customers || customers.length == 0) {
       response = {
         success: false,
         description: "no data was updated",
@@ -156,14 +166,16 @@ export const putCustomer = async (ctx: any, next: () => Promise<unknown>) => {
 
     response = {
       success: true,
-      customer,
+      customer: customers[0],
     };
     ctx.response.status = 200;
     ctx.response.body = response;
   } catch (error) {
     response = {
       success: false,
-      error: error.message || error,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
     };
     ctx.response.status = 500;
     ctx.response.body = response;
@@ -179,16 +191,16 @@ export const deleteCustomer = async (
   console.log("Deleting a customer");
 
   try {
-    const { data: customer, error: error1 } = await supabase
+    const { data: customers, error: errorSelect } = await supabase
       .from("customers")
       .select("*")
       .eq("id", ctx.params.id);
 
-    if (error1) {
-      throw new Error(error1.message);
+    if (errorSelect) {
+      throw new Error(JSON.stringify(errorSelect));
     }
 
-    if (!customer || customer.length == 0) {
+    if (!customers || customers.length == 0) {
       response = {
         success: false,
       };
@@ -197,13 +209,13 @@ export const deleteCustomer = async (
       return;
     }
 
-    const { error: error2 } = await supabase
+    const { error: errorDelete } = await supabase
       .from("customers")
       .delete()
       .eq("id", ctx.params.id);
 
-    if (error2) {
-      throw new Error(error2.message);
+    if (errorDelete) {
+      throw new Error(JSON.stringify(errorDelete));
     }
 
     response = {
@@ -214,7 +226,9 @@ export const deleteCustomer = async (
   } catch (error) {
     response = {
       success: false,
-      error: error.message || error,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
     };
     ctx.response.status = 500;
     ctx.response.body = response;
