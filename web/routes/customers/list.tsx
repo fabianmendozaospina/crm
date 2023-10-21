@@ -4,15 +4,15 @@ import Customer from "../../islands/customers/Customer.tsx";
 
 export const handler: Handlers = {
   async GET(_, ctx) {
-    const res = await fetch("http://localhost:8000/api/customers", {
+    const resp = await fetch("http://localhost:3001/customers", {
       method: "GET",
     });
 
-    if (res.status === 404) {
+    if (resp.status === 404) {
       return ctx.render(null);
     }
 
-    const data = await res.json();
+    const data = await resp.json();
     return await ctx.render(data);
   },
 };
@@ -34,7 +34,7 @@ export default function List({ data }: PageProps) {
       {customers &&
         (
           <ul class="list-none p-0">
-            {customers.map((customer) => (
+            {customers.map((customer: any) => (
               <Customer
                 key={customer.id}
                 data={customer}

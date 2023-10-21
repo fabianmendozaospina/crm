@@ -1,13 +1,7 @@
 import { useState } from "preact/hooks";
 
-export default function NewCustomer() {
-  const [customer, setCustomer] = useState({
-    name: "",
-    lastName: "",
-    company: "",
-    email: "",
-    phone: "",
-  });
+export default function Editustomer(props: { data: any }) {
+  const [customer, setCustomer] = useState(props.data);
 
   const handleUpdateState = (e: any) => {
     setCustomer({
@@ -18,13 +12,13 @@ export default function NewCustomer() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
-    const resp = await fetch("http://localhost:3001/customers", {
-      method: "POST",
+    console.log(">>> customer.id", customer.id);
+    const resp = await fetch(`http://localhost:3001/customers/${customer.id}`, {
+      method: "PUT",
       body: JSON.stringify(customer),
     });
 
-    if (resp.status != 201) {
+    if (resp.status != 200) {
       alert("Error al Guardar!");
       return;
     }
@@ -43,7 +37,7 @@ export default function NewCustomer() {
 
   return (
     <>
-      <h1 class="font-bold text-gray-800 text-left pl-8">New Customer</h1>
+      <h1 class="font-bold text-gray-800 text-left pl-8">Edit Customer</h1>
 
       <form onSubmit={handleSubmit}>
         <legend>Fill out all fields</legend>
@@ -54,6 +48,7 @@ export default function NewCustomer() {
             type="text"
             placeholder="Customer name"
             name="name"
+            value={customer.name}
             onChange={handleUpdateState}
           />
         </div>
@@ -64,6 +59,7 @@ export default function NewCustomer() {
             type="text"
             placeholder="Customer last name"
             name="lastName"
+            value={customer.lastName}
             onChange={handleUpdateState}
           />
         </div>
@@ -74,6 +70,7 @@ export default function NewCustomer() {
             type="text"
             placeholder="Customer company"
             name="company"
+            value={customer.company}
             onChange={handleUpdateState}
           />
         </div>
@@ -84,6 +81,7 @@ export default function NewCustomer() {
             type="email"
             placeholder="Customer email"
             name="email"
+            value={customer.email}
             onChange={handleUpdateState}
           />
         </div>
@@ -94,6 +92,7 @@ export default function NewCustomer() {
             type="text"
             placeholder="Customer phone"
             name="phone"
+            value={customer.phone}
             onChange={handleUpdateState}
           />
         </div>
@@ -102,7 +101,7 @@ export default function NewCustomer() {
           <input
             type="submit"
             class="btn btn-a7.1zul"
-            value="Add Customer"
+            value="Save Changes"
             style={"cursor: pointer"}
             disabled={validateCustomer()}
           />
