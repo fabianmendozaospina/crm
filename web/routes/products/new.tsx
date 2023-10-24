@@ -1,10 +1,10 @@
 import Layout from "../../components/layout/index.tsx";
-import NewProduct from "../../islands/customers/NewProduct.tsx";
+import NewOrder from "../../islands/products/NewProduct.tsx";
 
-export default function new() {
+export default function New() {
   return (
     <Layout>
-        <NewProduct />
+      <NewOrder />
     </Layout>
-  )
+  );
 }

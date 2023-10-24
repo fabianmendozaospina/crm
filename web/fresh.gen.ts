@@ -8,11 +8,21 @@ import * as $2 from "./routes/customers/edit/[id].tsx";
 import * as $3 from "./routes/customers/list.tsx";
 import * as $4 from "./routes/customers/new.tsx";
 import * as $5 from "./routes/index.tsx";
-import * as $6 from "./routes/orders.tsx";
-import * as $7 from "./routes/products.tsx";
+import * as $6 from "./routes/orders/edit/[id].tsx";
+import * as $7 from "./routes/orders/list.tsx";
+import * as $8 from "./routes/orders/new.tsx";
+import * as $9 from "./routes/products/edit/[id].tsx";
+import * as $10 from "./routes/products/list.tsx";
+import * as $11 from "./routes/products/new.tsx";
 import * as $$0 from "./islands/customers/Customer.tsx";
 import * as $$1 from "./islands/customers/EditCustomer.tsx";
 import * as $$2 from "./islands/customers/NewCustomer.tsx";
+import * as $$3 from "./islands/orders/EditOrder.tsx";
+import * as $$4 from "./islands/orders/NewOrder.tsx";
+import * as $$5 from "./islands/orders/Order.tsx";
+import * as $$6 from "./islands/products/EditProduct.tsx";
+import * as $$7 from "./islands/products/NewProduct.tsx";
+import * as $$8 from "./islands/products/Product.tsx";
 
 const manifest = {
   routes: {
@@ -22,13 +32,23 @@ const manifest = {
     "./routes/customers/list.tsx": $3,
     "./routes/customers/new.tsx": $4,
     "./routes/index.tsx": $5,
-    "./routes/orders.tsx": $6,
-    "./routes/products.tsx": $7,
+    "./routes/orders/edit/[id].tsx": $6,
+    "./routes/orders/list.tsx": $7,
+    "./routes/orders/new.tsx": $8,
+    "./routes/products/edit/[id].tsx": $9,
+    "./routes/products/list.tsx": $10,
+    "./routes/products/new.tsx": $11,
   },
   islands: {
     "./islands/customers/Customer.tsx": $$0,
     "./islands/customers/EditCustomer.tsx": $$1,
     "./islands/customers/NewCustomer.tsx": $$2,
+    "./islands/orders/EditOrder.tsx": $$3,
+    "./islands/orders/NewOrder.tsx": $$4,
+    "./islands/orders/Order.tsx": $$5,
+    "./islands/products/EditProduct.tsx": $$6,
+    "./islands/products/NewProduct.tsx": $$7,
+    "./islands/products/Product.tsx": $$8,
   },
   baseUrl: import.meta.url,
 };

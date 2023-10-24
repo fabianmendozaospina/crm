@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 
-export default function Editustomer(props: { data: any }) {
+export default function EditCustomer(props: { data: any }) {
   const [customer, setCustomer] = useState(props.data);
 
   const handleUpdateState = (e: any) => {

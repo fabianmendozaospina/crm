@@ -16,7 +16,7 @@ export default function Navigacion() {
           Customers
         </a>
         <a
-          href="/products"
+          href="/products/list"
           class="block font-sans text-gray-700 mb-8 text-1.8xl relative pl-5 pt-2"
         >
           <span class="absolute left-0 top-2 text-3xl mr-4">
@@ -25,7 +25,7 @@ export default function Navigacion() {
           Products
         </a>
         <a
-          href="/orders"
+          href="/orders/list"
           class="block font-sans text-gray-700 mb-8 text-1.8xl relative pl-5 pt-2"
         >
           <span class="absolute left-0 top-2 text-3xl mr-4">

@@ -1,6 +1,7 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Layout from "../../components/layout/index.tsx";
 import Customer from "../../islands/customers/Customer.tsx";
+import Spinner from "../../components/layout/Spinner.tsx";
 
 export const handler: Handlers = {
   async GET(_, ctx) {
@@ -19,6 +20,10 @@ export const handler: Handlers = {
 
 export default function List({ data }: PageProps) {
   const { customers } = data;
+
+  // Loading Spinner.
+  if (!customers.length) return <Spinner />;
+
   return (
     <Layout>
       <h1 class="font-bold text-gray-800 text-left pl-8">Customers</h1>
