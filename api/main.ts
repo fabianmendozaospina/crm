@@ -5,9 +5,18 @@ import "https://deno.land/std@0.193.0/dotenv/load.ts";
 const URL = Deno.env.get("URL") || "http://localhost";
 const PORT: number = Number(Deno.env.get("PORT")) || 3001;
 const app = new Application();
-
 const allowedOrigins = oakCors({ origin: "http://localhost:8000" });
+
 app.use(allowedOrigins);
+app.use(async (context, next) => {
+  try {
+    await context.send({
+      root: `${Deno.cwd()}/static`,
+    });
+  } catch {
+    await next();
+  }
+});
 
 initRouters(app);
 

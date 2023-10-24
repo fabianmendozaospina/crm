@@ -1,5 +1,5 @@
 import Supabase from "../repository/supabase.ts";
-import { Context } from "../../deps.ts";
+import { Context, preUploadValidate, upload } from "../../deps.ts";
 
 const supabase = Supabase.getInstance().client;
 
@@ -16,7 +16,7 @@ export const getProducts = async (
       .select("*");
 
     if (error) {
-      throw new Error(error.message);
+      throw new Error(JSON.stringify(error));
     }
 
     if (!products || products.length == 0) {
@@ -38,7 +38,9 @@ export const getProducts = async (
   } catch (error) {
     response = {
       success: false,
-      error: error.message || error,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
     };
     ctx.response.status = 500;
     ctx.response.body = response;
@@ -51,16 +53,16 @@ export const getProduct = async (ctx: any, next: () => Promise<unknown>) => {
   console.log("Getting a product");
 
   try {
-    const { data: product, error } = await supabase
+    const { data: products, error } = await supabase
       .from("products")
       .select("*")
       .eq("id", ctx.params.id);
 
     if (error) {
-      throw new Error(error.message);
+      throw new Error(JSON.stringify(error));
     }
 
-    if (!product || product.length == 0) {
+    if (!products || products.length == 0) {
       response = {
         success: false,
         description: "no data was obtained",
@@ -72,14 +74,16 @@ export const getProduct = async (ctx: any, next: () => Promise<unknown>) => {
 
     response = {
       success: true,
-      product,
+      product: products[0],
     };
     ctx.response.status = 200;
     ctx.response.body = response;
   } catch (error) {
     response = {
       success: false,
-      error: error.message || error,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
     };
     ctx.response.status = 500;
     ctx.response.body = response;
@@ -92,30 +96,45 @@ export const postProduct = async (
   next: () => Promise<unknown>,
 ) => {
   let response = {};
-  const body = ctx.request.body();
-  const data = await body.value;
+  const body = await ctx.request.body({ type: "form-data" });
+  const data = await body.value.read();
+  const product: any = data.fields;
+  const fileFullPath = data.files ? data.files[0].filename : "";
+  product.image = fileFullPath ? fileFullPath.split("/")[1] : "";
+
+  if (fileFullPath == "") {
+    throw new Error("Not is possible upload the file.");
+  }
+
+  await Deno.writeFile(
+    `${Deno.cwd()}/static/${product.image}`,
+    await Deno.readFile(fileFullPath ? fileFullPath : ""),
+  );
+
   console.log("Adding a product");
 
   try {
-    const { data: product, error } = await supabase
+    const { data: products, error } = await supabase
       .from("products")
-      .insert(data)
+      .insert(product)
       .select();
 
-    if (error) {
-      throw new Error(error.message);
+    if (error || products.length == 0) {
+      throw new Error(JSON.stringify(error));
     }
 
     response = {
       success: true,
-      product,
+      products,
     };
     ctx.response.status = 201;
     ctx.response.body = response;
   } catch (error) {
     response = {
       success: false,
-      error: error.message || error,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
     };
     ctx.response.status = 500;
     ctx.response.body = response;
@@ -130,17 +149,17 @@ export const putProduct = async (ctx: any, next: () => Promise<unknown>) => {
   console.log("Updating a product");
 
   try {
-    const { data: product, error } = await supabase
+    const { data: products, error } = await supabase
       .from("products")
       .update(data)
       .eq("id", ctx.params.id)
       .select();
 
     if (error) {
-      throw new Error(error.message);
+      throw new Error(JSON.stringify(error));
     }
 
-    if (!product || product.length == 0) {
+    if (!products || products.length == 0) {
       response = {
         success: false,
         description: "no data was updated",
@@ -152,14 +171,16 @@ export const putProduct = async (ctx: any, next: () => Promise<unknown>) => {
 
     response = {
       success: true,
-      product,
+      products,
     };
     ctx.response.status = 200;
     ctx.response.body = response;
   } catch (error) {
     response = {
       success: false,
-      error: error.message || error,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
     };
     ctx.response.status = 500;
     ctx.response.body = response;
@@ -175,16 +196,16 @@ export const deleteProduct = async (
   console.log("Deleting a product");
 
   try {
-    const { data: product, error: error1 } = await supabase
+    const { data: products, error: errorSelect } = await supabase
       .from("products")
       .select("*")
       .eq("id", ctx.params.id);
 
-    if (error1) {
-      throw new Error(error1.message);
+    if (errorSelect) {
+      throw new Error(JSON.stringify(errorSelect));
     }
 
-    if (!product || product.length == 0) {
+    if (!products || products.length == 0) {
       response = {
         success: false,
       };
@@ -193,13 +214,13 @@ export const deleteProduct = async (
       return;
     }
 
-    const { error: error2 } = await supabase
+    const { error: errorDelete } = await supabase
       .from("products")
       .delete()
       .eq("id", ctx.params.id);
 
-    if (error2) {
-      throw new Error(error2.message);
+    if (errorDelete) {
+      throw new Error(JSON.stringify(errorDelete));
     }
 
     response = {
@@ -210,7 +231,9 @@ export const deleteProduct = async (
   } catch (error) {
     response = {
       success: false,
-      error: error.message || error,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
     };
     ctx.response.status = 500;
     ctx.response.body = response;
