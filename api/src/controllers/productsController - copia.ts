@@ -108,7 +108,7 @@ export const postProduct = async (
 
   await Deno.writeFile(
     `${Deno.cwd()}/static/${product.image}`,
-    await Deno.readFile(fileFullPath || ""),
+    await Deno.readFile(fileFullPath ? fileFullPath : ""),
   );
 
   console.log("Adding a product");
