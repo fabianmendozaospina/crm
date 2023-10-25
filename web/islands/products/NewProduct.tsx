@@ -15,23 +15,32 @@ export default function NewProduct() {
   };
 
   const handleUpdateFile = (e: any) => {
-    setFile(e.target.value[0]);
+    setFile(e.target.files[0]);
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const resp = await fetch("http://localhost:3001/products", {
-      method: "POST",
-      body: JSON.stringify(product),
-    });
+    const formData = new FormData();
+    formData.append("name", product.name);
+    formData.append("price", product.price);
+    formData.append("image", file);
 
-    if (resp.status != 201) {
-      alert("Error al Guardar!");
-      return;
+    try {
+      const resp = await fetch("http://localhost:3001/products", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (resp.status != 201) {
+        alert("Error al Guardar!");
+        return;
+      }
+
+      alert("Guardado con éxito!");
+    } catch (error) {
+      alert("Hubo un error. Vuelva a intentarlo");
     }
-
-    alert("Guardado con éxito!");
   };
 
   const validateProduct = () => {

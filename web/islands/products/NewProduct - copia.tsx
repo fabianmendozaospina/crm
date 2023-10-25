@@ -1,7 +1,10 @@
 import { useState } from "preact/hooks";
 
-export default function EditProduct(props: { data: any }) {
-  const [product, setProduct] = useState(props.data);
+export default function NewProduct() {
+  const [product, setProduct] = useState({
+    name: "",
+    price: "",
+  });
   const [file, setFile] = useState("");
 
   const handleUpdateState = (e: any) => {
@@ -11,17 +14,22 @@ export default function EditProduct(props: { data: any }) {
     });
   };
 
+  const handleUpdateFile = (e: any) => {
+    setFile(e.target.files);
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
+    console.log(">> file:", file);
     const formData = new FormData();
     formData.append("name", product.name);
     formData.append("price", product.price);
     formData.append("image", file);
+    console.log(">> formData:", formData);
 
     try {
       const resp = await fetch("http://localhost:3001/products", {
-        method: "PUT",
+        method: "POST",
         body: formData,
       });
 
@@ -37,17 +45,16 @@ export default function EditProduct(props: { data: any }) {
   };
 
   const validateProduct = () => {
-    const { name, lastName, email, company, phone } = product;
+    const { name, price } = product;
 
-    const valid = !(name.length > 0) || !(lastName.length > 0) ||
-      !(email.length > 0) || !(company.length > 0) || !(phone.length > 0);
+    const valid = !(name.length > 0) || !(price.length > 0);
 
     return valid;
   };
 
   return (
     <>
-      <h1 class="font-bold text-gray-800 text-left pl-8">Edit Product</h1>
+      <h1 class="font-bold text-gray-800 text-left pl-8">New Product</h1>
 
       <form onSubmit={handleSubmit}>
         <legend>Fill out all fields</legend>

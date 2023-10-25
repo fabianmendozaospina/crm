@@ -21,8 +21,9 @@ import * as $$3 from "./islands/orders/EditOrder.tsx";
 import * as $$4 from "./islands/orders/NewOrder.tsx";
 import * as $$5 from "./islands/orders/Order.tsx";
 import * as $$6 from "./islands/products/EditProduct.tsx";
-import * as $$7 from "./islands/products/NewProduct.tsx";
-import * as $$8 from "./islands/products/Product.tsx";
+import * as $$7 from "./islands/products/NewProduct - copia.tsx";
+import * as $$8 from "./islands/products/NewProduct.tsx";
+import * as $$9 from "./islands/products/Product.tsx";
 
 const manifest = {
   routes: {
@@ -47,8 +48,9 @@ const manifest = {
     "./islands/orders/NewOrder.tsx": $$4,
     "./islands/orders/Order.tsx": $$5,
     "./islands/products/EditProduct.tsx": $$6,
-    "./islands/products/NewProduct.tsx": $$7,
-    "./islands/products/Product.tsx": $$8,
+    "./islands/products/NewProduct - copia.tsx": $$7,
+    "./islands/products/NewProduct.tsx": $$8,
+    "./islands/products/Product.tsx": $$9,
   },
   baseUrl: import.meta.url,
 };
