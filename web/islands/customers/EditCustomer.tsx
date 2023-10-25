@@ -1,4 +1,5 @@
 import { useState } from "preact/hooks";
+import Spinner from "../../components/layout/Spinner.tsx";
 
 export default function EditCustomer(props: { data: any }) {
   const [customer, setCustomer] = useState(props.data);
@@ -34,6 +35,8 @@ export default function EditCustomer(props: { data: any }) {
 
     return valid;
   };
+
+  if (!customer) return <Spinner />;
 
   return (
     <>

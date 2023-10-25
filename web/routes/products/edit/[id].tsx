@@ -19,11 +19,11 @@ export const handler: Handlers = {
 };
 
 export default function Edit({ data }: PageProps) {
-  const { products } = data;
+  const { product } = data;
   return (
     <Layout>
       <EditProduct
-        data={products}
+        data={product}
       />
     </Layout>
   );

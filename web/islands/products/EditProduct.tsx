@@ -1,4 +1,5 @@
 import { useState } from "preact/hooks";
+import Spinner from "../../components/layout/Spinner.tsx";
 
 export default function EditProduct(props: { data: any }) {
   const [product, setProduct] = useState(props.data);
@@ -10,22 +11,28 @@ export default function EditProduct(props: { data: any }) {
       [e.target.name]: e.target.value,
     });
   };
+  const handleUpdateFile = (e: any) => {
+    setFile(e.target.files[0]);
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
+    console.log("ojooo");
     const formData = new FormData();
     formData.append("name", product.name);
     formData.append("price", product.price);
-    formData.append("image", file);
+
+    if (file != "") {
+      formData.append("image", file);
+    }
 
     try {
-      const resp = await fetch("http://localhost:3001/products", {
+      const resp = await fetch(`http://localhost:3001/products/${product.id}`, {
         method: "PUT",
         body: formData,
       });
 
-      if (resp.status != 201) {
+      if (resp.status != 200) {
         alert("Error al Guardar!");
         return;
       }
@@ -37,13 +44,16 @@ export default function EditProduct(props: { data: any }) {
   };
 
   const validateProduct = () => {
-    const { name, lastName, email, company, phone } = product;
+    // const { name, price } = product;
 
-    const valid = !(name.length > 0) || !(lastName.length > 0) ||
-      !(email.length > 0) || !(company.length > 0) || !(phone.length > 0);
+    // const valid = !(name.length > 0) || !(price.length > 0);
 
-    return valid;
+    // return valid;
+
+    return false;
   };
+
+  if (!product) return <Spinner />;
 
   return (
     <>
@@ -59,6 +69,7 @@ export default function EditProduct(props: { data: any }) {
             placeholder="Product name"
             name="name"
             onChange={handleUpdateState}
+            value={product.name}
           />
         </div>
 
@@ -71,14 +82,25 @@ export default function EditProduct(props: { data: any }) {
             step="0.01"
             placeholder="Price"
             onChange={handleUpdateState}
+            value={product.price}
           />
         </div>
 
         <div class="campo">
           <label>Image:</label>
+          {product.image
+            ? (
+              <img
+                src={`http://localhost:3001/${product.image}`}
+                alt="image"
+                width="300"
+              />
+            )
+            : null}
           <input
             type="file"
             name="imagen"
+            accept="image/*"
             onChange={handleUpdateFile}
           />
         </div>
@@ -87,7 +109,7 @@ export default function EditProduct(props: { data: any }) {
           <input
             type="submit"
             class="btn btn-azul"
-            value="Add Product"
+            value="Save Product"
             style={"cursor: pointer"}
             disabled={validateProduct()}
           />
