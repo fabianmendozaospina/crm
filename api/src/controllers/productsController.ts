@@ -7,8 +7,8 @@ export const getProducts = async (
   ctx: Context,
   next: () => Promise<unknown>,
 ) => {
-  let response = {};
   console.log("Getting products");
+  let response = {};
 
   try {
     const { data: products, error } = await supabase
@@ -49,8 +49,8 @@ export const getProducts = async (
 };
 
 export const getProduct = async (ctx: any, next: () => Promise<unknown>) => {
-  let response = {};
   console.log("Getting a product");
+  let response = {};
 
   try {
     const { data: products, error } = await supabase
@@ -95,25 +95,26 @@ export const postProduct = async (
   ctx: Context,
   next: () => Promise<unknown>,
 ) => {
-  let response = {};
-  const body = await ctx.request.body({ type: "form-data" });
-  const data = await body.value.read();
-  const product: any = data.fields;
-  const fileFullPath = data.files ? data.files[0].filename : "";
-  product.image = fileFullPath ? fileFullPath.split("/")[1] : "";
-
-  if (fileFullPath == "") {
-    throw new Error("Not is possible upload the file.");
-  }
-
-  await Deno.writeFile(
-    `${Deno.cwd()}/static/${product.image}`,
-    await Deno.readFile(fileFullPath || ""),
-  );
-
   console.log("Adding a product");
+  let response = {};
 
   try {
+    const body = await ctx.request.body({ type: "form-data" });
+    const data = await body.value.read();
+    const product: any = data.fields;
+    const fileFullPath = data.files ? data.files[0].filename : "";
+
+    if (fileFullPath == "") {
+      throw new Error("The file is required.");
+    }
+
+    product.image = fileFullPath ? fileFullPath.split("/")[1] : "";
+
+    await Deno.writeFile(
+      `${Deno.cwd()}/static/${product.image}`,
+      await Deno.readFile(fileFullPath || ""),
+    );
+
     const { data: products, error } = await supabase
       .from("products")
       .insert(product)
@@ -143,15 +144,27 @@ export const postProduct = async (
 };
 
 export const putProduct = async (ctx: any, next: () => Promise<unknown>) => {
-  let response = {};
-  const body = ctx.request.body();
-  const data = await body.value;
   console.log("Updating a product");
+  let response = {};
 
   try {
+    const body = await ctx.request.body({ type: "form-data" });
+    const data = await body.value.read();
+    const product: any = data.fields;
+    const fileFullPath = data.files ? data.files[0].filename : "";
+
+    if (fileFullPath != "") {
+      product.image = fileFullPath ? fileFullPath.split("/")[1] : "";
+
+      await Deno.writeFile(
+        `${Deno.cwd()}/static/${product.image}`,
+        await Deno.readFile(fileFullPath || ""),
+      );
+    }
+
     const { data: products, error } = await supabase
       .from("products")
-      .update(data)
+      .update(product)
       .eq("id", ctx.params.id)
       .select();
 
@@ -171,7 +184,7 @@ export const putProduct = async (ctx: any, next: () => Promise<unknown>) => {
 
     response = {
       success: true,
-      products,
+      product: products[0],
     };
     ctx.response.status = 200;
     ctx.response.body = response;
@@ -192,8 +205,8 @@ export const deleteProduct = async (
   ctx: any,
   next: () => Promise<unknown>,
 ) => {
-  let response = {};
   console.log("Deleting a product");
+  let response = {};
 
   try {
     const { data: products, error: errorSelect } = await supabase
