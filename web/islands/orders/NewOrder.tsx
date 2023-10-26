@@ -1,6 +1,8 @@
 import { useState } from "preact/hooks";
+import SearchProduct from "./SearchProduct.tsx";
 
-export default function NewOrder() {
+export default function NewOrder(props: { data: any }) {
+  const [customer, setCustomer] = useState(props.data);
   const [order, setOrder] = useState({
     name: "",
     lastName: "",
@@ -41,72 +43,29 @@ export default function NewOrder() {
     return valid;
   };
 
+  const searchProduct = () => {
+  };
+
+  const readSearchData = () => {
+  };
+
   return (
     <>
-      <h1 class="font-bold text-gray-800 text-left pl-8">New Customer</h1>
+      <h1 class="font-bold text-gray-800 text-left pl-8">New Order</h1>
 
       <form onSubmit={handleSubmit}>
         <legend>Fill out all fields</legend>
 
-        <div class="campo">
-          <label>Name:</label>
-          <input
-            type="text"
-            placeholder="Customer name"
-            name="name"
-            onChange={handleUpdateState}
-          />
+        <div className="ficha-cliente">
+          <h3>Customer's Data</h3>
+          <p>Name: {customer.name} {customer.lastName}</p>
+          <p>Phone: {customer.phone}</p>
         </div>
 
-        <div class="campo">
-          <label>Last name:</label>
-          <input
-            type="text"
-            placeholder="Customer last name"
-            name="lastName"
-            onChange={handleUpdateState}
-          />
-        </div>
-
-        <div class="campo">
-          <label>Company:</label>
-          <input
-            type="text"
-            placeholder="Customer company"
-            name="company"
-            onChange={handleUpdateState}
-          />
-        </div>
-
-        <div class="campo">
-          <label>Email:</label>
-          <input
-            type="email"
-            placeholder="Customer email"
-            name="email"
-            onChange={handleUpdateState}
-          />
-        </div>
-
-        <div class="campo">
-          <label>Phone:</label>
-          <input
-            type="text"
-            placeholder="Customer phone"
-            name="phone"
-            onChange={handleUpdateState}
-          />
-        </div>
-
-        <div class="enviar">
-          <input
-            type="submit"
-            class="btn btn-a7.1zul"
-            value="Add Customer"
-            style={"cursor: pointer"}
-            disabled={validateOrder()}
-          />
-        </div>
+        <SearchProduct
+          searchProduct={searchProduct}
+          readSearchData={readSearchData}
+        />
       </form>
     </>
   );
