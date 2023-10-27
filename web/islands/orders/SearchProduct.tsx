@@ -10,7 +10,7 @@ export default function SearchProduct(props: any) {
         <input
           type="text"
           placeholder="Product Name"
-          name="productos"
+          name="products"
           onChange={props.readSearchData}
         />
       </div>

@@ -1,8 +1,13 @@
 import { useState } from "preact/hooks";
 import SearchProduct from "./SearchProduct.tsx";
+import AmountProduct from "./AmountProduct.tsx";
 
 export default function NewOrder(props: { data: any }) {
+  const emtyArray: any[] = [];
   const [customer, setCustomer] = useState(props.data);
+  const [search, setSearch] = useState("");
+  const [products, setProducts] = useState(emtyArray);
+
   const [order, setOrder] = useState({
     name: "",
     lastName: "",
@@ -34,19 +39,37 @@ export default function NewOrder(props: { data: any }) {
     alert("Guardado con éxito!");
   };
 
-  const validateOrder = () => {
-    const { name, lastName, email, company, phone } = order;
+  const searchProduct = async (e: any) => {
+    e.preventDefault();
 
-    const valid = !(name.length > 0) || !(lastName.length > 0) ||
-      !(email.length > 0) || !(company.length > 0) || !(phone.length > 0);
+    const resp = await fetch(
+      `http://localhost:3001/products/search/${search}`,
+      {
+        method: "POST",
+      },
+    );
 
-    return valid;
+    if (resp.status != 200) {
+      alert("Error al Consultar!");
+      return;
+    }
+
+    const data = await resp.json();
+    const { product } = data;
+
+    if (product) {
+      const productResult = { productId: "", amount: 0 };
+      productResult.productId = product.id;
+      productResult.amount = 0;
+
+      setProducts([...products, productResult]);
+    } else {
+      alert("No hay resultados");
+    }
   };
 
-  const searchProduct = () => {
-  };
-
-  const readSearchData = () => {
+  const readSearchData = (e: any) => {
+    setSearch(e.target.value);
   };
 
   return (
@@ -66,6 +89,12 @@ export default function NewOrder(props: { data: any }) {
           searchProduct={searchProduct}
           readSearchData={readSearchData}
         />
+
+        <ul class="resumen">
+          {products.map((products, index) => {
+            <AmountProduct />;
+          })}
+        </ul>
       </form>
     </>
   );

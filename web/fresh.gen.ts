@@ -17,13 +17,14 @@ import * as $11 from "./routes/products/new.tsx";
 import * as $$0 from "./islands/customers/Customer.tsx";
 import * as $$1 from "./islands/customers/EditCustomer.tsx";
 import * as $$2 from "./islands/customers/NewCustomer.tsx";
-import * as $$3 from "./islands/orders/EditOrder.tsx";
-import * as $$4 from "./islands/orders/NewOrder.tsx";
-import * as $$5 from "./islands/orders/Order.tsx";
-import * as $$6 from "./islands/orders/SearchProduct.tsx";
-import * as $$7 from "./islands/products/EditProduct.tsx";
-import * as $$8 from "./islands/products/NewProduct.tsx";
-import * as $$9 from "./islands/products/Product.tsx";
+import * as $$3 from "./islands/orders/AmountProduct.tsx";
+import * as $$4 from "./islands/orders/EditOrder.tsx";
+import * as $$5 from "./islands/orders/NewOrder.tsx";
+import * as $$6 from "./islands/orders/Order.tsx";
+import * as $$7 from "./islands/orders/SearchProduct.tsx";
+import * as $$8 from "./islands/products/EditProduct.tsx";
+import * as $$9 from "./islands/products/NewProduct.tsx";
+import * as $$10 from "./islands/products/Product.tsx";
 
 const manifest = {
   routes: {
@@ -44,13 +45,14 @@ const manifest = {
     "./islands/customers/Customer.tsx": $$0,
     "./islands/customers/EditCustomer.tsx": $$1,
     "./islands/customers/NewCustomer.tsx": $$2,
-    "./islands/orders/EditOrder.tsx": $$3,
-    "./islands/orders/NewOrder.tsx": $$4,
-    "./islands/orders/Order.tsx": $$5,
-    "./islands/orders/SearchProduct.tsx": $$6,
-    "./islands/products/EditProduct.tsx": $$7,
-    "./islands/products/NewProduct.tsx": $$8,
-    "./islands/products/Product.tsx": $$9,
+    "./islands/orders/AmountProduct.tsx": $$3,
+    "./islands/orders/EditOrder.tsx": $$4,
+    "./islands/orders/NewOrder.tsx": $$5,
+    "./islands/orders/Order.tsx": $$6,
+    "./islands/orders/SearchProduct.tsx": $$7,
+    "./islands/products/EditProduct.tsx": $$8,
+    "./islands/products/NewProduct.tsx": $$9,
+    "./islands/products/Product.tsx": $$10,
   },
   baseUrl: import.meta.url,
 };
