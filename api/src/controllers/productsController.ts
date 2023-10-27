@@ -1,5 +1,6 @@
 import Supabase from "../repository/supabase.ts";
 import { Context, preUploadValidate, upload } from "../../deps.ts";
+import { readLong } from "https://deno.land/std@0.193.0/io/read_long.ts";
 
 const supabase = Supabase.getInstance().client;
 
@@ -143,7 +144,46 @@ export const postProduct = async (
   }
 };
 
-export const putProduct = async (ctx: any, next: () => Promise<unknown>) => {
+export const postProductSearch = async (
+  ctx: any,
+  next: () => Promise<unknown>,
+) => {
+  console.log("Searching a product");
+  let response = {};
+
+  try {
+    const { data: products, error } = await supabase
+      .from("products")
+      .select("*")
+      .ilike("name", "%" + ctx.params.query + "%");
+
+    if (error) {
+      throw new Error(JSON.stringify(error));
+    }
+
+    response = {
+      success: true,
+      product: products[0],
+    };
+    ctx.response.status = 200;
+    ctx.response.body = response;
+  } catch (error) {
+    response = {
+      success: false,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
+    };
+    ctx.response.status = 500;
+    ctx.response.body = response;
+    await next();
+  }
+};
+
+export const putProduct = async (
+  ctx: any,
+  next: () => Promise<unknown>,
+) => {
   console.log("Updating a product");
   let response = {};
 

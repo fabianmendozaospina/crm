@@ -4,6 +4,7 @@ import {
   getProduct,
   getProducts,
   postProduct,
+  postProductSearch,
   putProduct,
 } from "../controllers/productsController.ts";
 
@@ -13,6 +14,7 @@ router
   .get("/products", getProducts)
   .get("/products/:id", getProduct)
   .post("/products", postProduct)
+  .post("/products/search/:query", postProductSearch)
   .put("/products/:id", putProduct)
   .delete("/products/:id", deleteProduct)
   .allowedMethods();
