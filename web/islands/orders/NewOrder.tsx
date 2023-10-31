@@ -58,8 +58,7 @@ export default function NewOrder(props: { data: any }) {
     const { product } = data;
 
     if (product) {
-      const productResult = { productId: "", amount: 0 };
-      productResult.productId = product.id;
+      const productResult = product;
       productResult.amount = 0;
 
       setProducts([...products, productResult]);
@@ -71,6 +70,7 @@ export default function NewOrder(props: { data: any }) {
   const readSearchData = (e: any) => {
     setSearch(e.target.value);
   };
+  console.log("--products", products);
 
   return (
     <>
@@ -91,8 +91,11 @@ export default function NewOrder(props: { data: any }) {
         />
 
         <ul class="resumen">
-          {products.map((products, index) => {
-            <AmountProduct />;
+          {products.map((product) => {
+            <AmountProduct
+              key={product.id}
+              data={product}
+            />;
           })}
         </ul>
       </form>
