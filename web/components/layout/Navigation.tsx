@@ -1,14 +1,13 @@
 export default function Navigacion() {
   return (
-    <aside class="flex-none w-1/6 pt-7.2 bg-gray-200">
-      <nav class="w-full px-4 py-3 text-white mb-10">
-        <h2 class="block font-sans text-gray-700 mb-8 text-1.8xl relative pl-5 pt-2 font-bold">
-          Management
-        </h2>
-
+    <aside class="sidebar col-3">
+      <h2>
+        Management
+      </h2>
+      <nav class="navegacion">
         <a
           href="/customers/list"
-          class="block font-sans text-gray-700 mb-8 text-1.8xl relative pl-5 pt-2"
+          class="clientes"
         >
           <span class="absolute left-0 top-2 text-3xl mr-4">
             <i class="fas fa-users"></i>
@@ -17,7 +16,7 @@ export default function Navigacion() {
         </a>
         <a
           href="/products/list"
-          class="block font-sans text-gray-700 mb-8 text-1.8xl relative pl-5 pt-2"
+          class="productos"
         >
           <span class="absolute left-0 top-2 text-3xl mr-4">
             <i class="fas fa-cube"></i>
@@ -26,7 +25,7 @@ export default function Navigacion() {
         </a>
         <a
           href="/orders/list"
-          class="block font-sans text-gray-700 mb-8 text-1.8xl relative pl-5 pt-2"
+          class="pedidos"
         >
           <span class="absolute left-0 top-2 text-3xl mr-4">
             <i class="fas fa-clipboard-list"></i>

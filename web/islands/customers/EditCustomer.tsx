@@ -40,7 +40,7 @@ export default function EditCustomer(props: { data: any }) {
 
   return (
     <>
-      <h1 class="font-bold text-gray-800 text-left pl-8">Edit Customer</h1>
+      <h1>Edit Customer</h1>
 
       <form onSubmit={handleSubmit}>
         <legend>Fill out all fields</legend>
@@ -92,7 +92,7 @@ export default function EditCustomer(props: { data: any }) {
         <div class="campo">
           <label>Phone:</label>
           <input
-            type="text"
+            type="tel"
             placeholder="Customer phone"
             name="phone"
             value={customer.phone}
@@ -103,7 +103,7 @@ export default function EditCustomer(props: { data: any }) {
         <div class="enviar">
           <input
             type="submit"
-            class="btn btn-a7.1zul"
+            class="btn btn-azul"
             value="Save Changes"
             style={"cursor: pointer"}
             disabled={validateCustomer()}

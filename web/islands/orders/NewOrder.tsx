@@ -74,17 +74,15 @@ export default function NewOrder(props: { data: any }) {
 
   return (
     <>
-      <h1 class="font-bold text-gray-800 text-left pl-8">New Order</h1>
+      <h1>New Order</h1>
+
+      <div class="ficha-cliente">
+        <h3>Customer's Data</h3>
+        <p>Name: {customer.name} {customer.lastName}</p>
+        <p>Phone: {customer.phone}</p>
+      </div>
 
       <form onSubmit={handleSubmit}>
-        <legend>Fill out all fields</legend>
-
-        <div className="ficha-cliente">
-          <h3>Customer's Data</h3>
-          <p>Name: {customer.name} {customer.lastName}</p>
-          <p>Phone: {customer.phone}</p>
-        </div>
-
         <SearchProduct
           searchProduct={searchProduct}
           readSearchData={readSearchData}

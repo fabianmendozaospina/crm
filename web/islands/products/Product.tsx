@@ -28,10 +28,10 @@ export default function Product(props: { key: number; data: any }) {
   };
 
   return (
-    <li class="mt-4 p-8 pt-0 pb-0 pl-8 pr-0 border-b border-solid border-gray-300">
-      <div class="flex-0 flex-shrink-0">
-        <p class="text-green-500 font-bold text-md">{name}</p>
-        <p class="text-gray-600 font-bold text-md">${price}</p>
+    <li class="producto">
+      <div class="info-producto">
+        <p class="nombre">{name}</p>
+        <p class="precio">${price}</p>
         {image
           ? <img src={`http://localhost:3001/${image}`} alt="image" />
           : null}

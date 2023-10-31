@@ -28,12 +28,12 @@ export default function Customer(props: { key: number; data: any }) {
   };
 
   return (
-    <li class="mt-4 p-8 pt-0 pb-0 pl-8 pr-0 border-b border-solid border-gray-300">
-      <div class="flex-0 flex-shrink-0">
-        <p class="text-green-500 font-bold text-md">
+    <li class="cliente">
+      <div class="info-cliente">
+        <p class="nombre">
           {name} {lastName}
         </p>
-        <p class="text-gray-600 font-bold text-md">{company}</p>
+        <p class="empresa">{company}</p>
         <p>{email}</p>
         <p>Phone: {phone}</p>
       </div>
