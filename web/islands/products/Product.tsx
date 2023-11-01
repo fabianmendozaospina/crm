@@ -38,7 +38,7 @@ export default function Product(props: { key: number; data: any }) {
       </div>
       <div class="acciones">
         <a href={`/products/edit/${id}`} class="btn btn-azul">
-          <i class="fas fa-pen-alt"></i>
+          <i class="fas fa-pen"></i>
           Edit Product
         </a>
         <button
@@ -47,7 +47,7 @@ export default function Product(props: { key: number; data: any }) {
           onClick={() => deleteProduct(id)}
         >
           <i class="fas fa-times"></i>
-          Delete Customer
+          Delete Product
         </button>
       </div>
     </li>

@@ -39,11 +39,11 @@ export default function Customer(props: { key: number; data: any }) {
       </div>
       <div class="acciones">
         <a href={`/customers/edit/${id}`} class="btn btn-azul">
-          <i class="fas fa-pen-alt"></i>
+          <i class="fas fa-pen"></i>
           Edit Customer
         </a>
         <a href={`/orders/new/${id}`} class="btn btn-amarillo">
-          <i class="fas fa-pen-plus"></i>
+          <i class="fas fa-plus"></i>
           New Order
         </a>
         <button

@@ -32,7 +32,7 @@ export default function List({ data }: PageProps) {
         href="/customers/new"
         class="btn btn-verde nvo-cliente"
       >
-        <i class="fas fa-plus-circle"></i>
+        <i class="fas fa-plus"></i>
         New Customer
       </a>
 

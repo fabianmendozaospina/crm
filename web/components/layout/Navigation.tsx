@@ -4,31 +4,23 @@ export default function Navigacion() {
       <h2>
         Management
       </h2>
-      <nav class="navegacion">
-        <a
-          href="/customers/list"
-          class="clientes"
-        >
-          <span class="absolute left-0 top-2 text-3xl mr-4">
-            <i class="fas fa-users"></i>
+      <nav class="navegacion mt-10">
+        <a href="/customers/list">
+          <span class="absolute left-6 top-6 text-3xl mr-4 material-symbols-outlined">
+            diversity_4
           </span>
+
           Customers
         </a>
-        <a
-          href="/products/list"
-          class="productos"
-        >
-          <span class="absolute left-0 top-2 text-3xl mr-4">
-            <i class="fas fa-cube"></i>
+        <a href="/products/list">
+          <span class="absolute left-6 top-6 text-3xl mr-4 material-symbols-outlined">
+            apparel
           </span>
           Products
         </a>
-        <a
-          href="/orders/list"
-          class="pedidos"
-        >
-          <span class="absolute left-0 top-2 text-3xl mr-4">
-            <i class="fas fa-clipboard-list"></i>
+        <a href="/orders/list">
+          <span class="absolute left-6 top-6 text-3xl mr-4 material-symbols-outlined">
+            receipt_long
           </span>
           Orders
         </a>
