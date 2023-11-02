@@ -1,6 +1,5 @@
-export default function AmountProduct(props: { key: number; data: any }) {
+export default function AmountProduct(props: any) {
   const { id, name, price, amount } = props.data;
-  console.log("--props.data;", props.data);
 
   return (
     <li>
@@ -10,13 +9,22 @@ export default function AmountProduct(props: { key: number; data: any }) {
       </div>
       <div class="acciones">
         <div class="contenedor-cantidad">
-          <i class="fas fa-minus"></i>
+          <i
+            class="fas fa-minus"
+            onClick={() => props.subtractProducts(props.index)}
+          >
+          </i>
           <p>{amount}</p>
-          <i class="fas fa-plus"></i>
+          <i
+            class="fas fa-plus"
+            onClick={() => props.increaseProducts(props.index)}
+          >
+          </i>
         </div>
         <button type="button" class="btn btn-rojo">
-          <i class="fas fa-minus-circle"></i>
-          Eliminar Producto
+          <i class="fas fa-minus-circle">
+            Eliminar Producto
+          </i>
         </button>
       </div>
     </li>

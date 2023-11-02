@@ -43,7 +43,7 @@ export default function NewCustomer() {
 
   return (
     <>
-      <h1 class="font-bold text-gray-800 text-left pl-8">New Customer</h1>
+      <h2>New Customer</h2>
 
       <form onSubmit={handleSubmit}>
         <legend>Fill out all fields</legend>

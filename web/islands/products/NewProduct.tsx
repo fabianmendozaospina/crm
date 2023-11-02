@@ -53,7 +53,7 @@ export default function NewProduct() {
 
   return (
     <>
-      <h1 class="font-bold text-gray-800 text-left pl-8">New Product</h1>
+      <h2>New Product</h2>
 
       <form onSubmit={handleSubmit}>
         <legend>Fill out all fields</legend>

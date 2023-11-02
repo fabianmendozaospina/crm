@@ -70,16 +70,25 @@ export default function NewOrder(props: { data: any }) {
   const readSearchData = (e: any) => {
     setSearch(e.target.value);
   };
-  console.log("--products", products);
+
+  const subtractProducts = (index: number) => {
+    console.log("uno menos", index);
+  };
+
+  const increaseProducts = (index: number) => {
+    console.log("uno mas", index);
+  };
 
   return (
     <>
-      <h1>New Order</h1>
+      <h2>New Order</h2>
 
       <div class="ficha-cliente">
-        <h3>Customer's Data</h3>
-        <p>Name: {customer.name} {customer.lastName}</p>
-        <p>Phone: {customer.phone}</p>
+        <h3>
+          <b>Customer's Data</b>
+        </h3>
+        <p class="mt-3">Name: {customer.name} {customer.lastName}</p>
+        <p class="mt-3">Phone: {customer.phone}</p>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -89,12 +98,15 @@ export default function NewOrder(props: { data: any }) {
         />
 
         <ul class="resumen">
-          {products.map((product) => {
+          {products.map((product: any, index: number) => (
             <AmountProduct
               key={product.id}
               data={product}
-            />;
-          })}
+              subtractProducts={subtractProducts}
+              increaseProducts={increaseProducts}
+              index={index}
+            />
+          ))}
         </ul>
       </form>
     </>

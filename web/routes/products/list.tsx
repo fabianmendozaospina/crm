@@ -26,7 +26,7 @@ export default function List({ data }: PageProps) {
 
   return (
     <Layout>
-      <h1>Products</h1>
+      <h2>Products</h2>
       <a
         href="/products/new"
         class="btn btn-verde nvo-cliente"

@@ -26,7 +26,7 @@ export default function List({ data }: PageProps) {
 
   return (
     <Layout>
-      <h1>Customers</h1>
+      <h2>Customers</h2>
 
       <a
         href="/customers/new"

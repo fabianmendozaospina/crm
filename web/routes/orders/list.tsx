@@ -26,7 +26,7 @@ export default function List({ data }: PageProps) {
 
   return (
     <Layout>
-      <h1>Orders</h1>
+      <h2>Orders</h2>
 
       {orders &&
         (

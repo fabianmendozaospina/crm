@@ -57,7 +57,7 @@ export default function EditProduct(props: { data: any }) {
 
   return (
     <>
-      <h1 class="font-bold text-gray-800 text-left pl-8">Edit Product</h1>
+      <h2>Edit Product</h2>
 
       <form onSubmit={handleSubmit}>
         <legend>Fill out all fields</legend>

@@ -40,7 +40,7 @@ export default function EditCustomer(props: { data: any }) {
 
   return (
     <>
-      <h1>Edit Customer</h1>
+      <h2>Edit Customer</h2>
 
       <form onSubmit={handleSubmit}>
         <legend>Fill out all fields</legend>
