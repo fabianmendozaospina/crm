@@ -91,31 +91,64 @@ export const postOrder = async (
   ctx: Context,
   next: () => Promise<unknown>,
 ) => {
-  let response = {};
-  const body = ctx.request.body();
-  const data = await body.value;
   console.log("Adding a order");
+  let response = {};
 
   try {
-    const { data: order, error } = await supabase
+    const body = ctx.request.body();
+    let data = await body.value;
+
+    if (typeof data == "string") {
+      data = JSON.parse(data);
+    }
+
+    const { data: orders, error: errorOrder } = await supabase
       .from("orders")
-      .insert(data)
+      .insert({ customerId: ctx.params.customerId })
       .select();
 
-    if (error) {
-      throw new Error(error.message);
+    if (errorOrder || orders.length == 0) {
+      throw new Error(JSON.stringify(errorOrder));
+    }
+
+    const details: any = [];
+    data.map((product: any) => {
+      details.push({
+        orderId: orders[0].id,
+        productId: product.productId,
+        amount: product.amount,
+      });
+    });
+
+    const { data: orderDetails, error: errorDetails } = await supabase
+      .from("orderDetails")
+      .insert(details)
+      .select(`
+        orders (
+          id,
+          customerId
+        ),      
+        id,
+        productId,
+        amount
+      `);
+
+    if (errorDetails || orderDetails.length == 0) {
+      throw new Error(JSON.stringify(errorDetails));
     }
 
     response = {
       success: true,
-      order,
+      order: orderDetails,
     };
     ctx.response.status = 201;
     ctx.response.body = response;
   } catch (error) {
     response = {
       success: false,
-      error: error.message || error,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
     };
     ctx.response.status = 500;
     ctx.response.body = response;

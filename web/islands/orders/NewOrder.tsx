@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import SearchProduct from "./SearchProduct.tsx";
 import AmountProduct from "./AmountProduct.tsx";
 
@@ -6,8 +6,12 @@ export default function NewOrder(props: { data: any }) {
   const emtyArray: any[] = [];
   const customer = props.data;
   const [search, setSearch] = useState("");
-  const [products, setProducts] = useState(emtyArray);
+  const [details, setDetails] = useState(emtyArray);
   const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    updateTotal();
+  }, [details]);
 
   const searchProduct = async (e: any) => {
     e.preventDefault();
@@ -28,10 +32,21 @@ export default function NewOrder(props: { data: any }) {
     const { product } = data;
 
     if (product) {
-      const productResult = product;
-      productResult.amount = 0;
+      const found = details.find((item) => item.productId === product.id);
 
-      setProducts([...products, productResult]);
+      if (found) {
+        alert("El producto ya está seleccionado");
+        return;
+      }
+
+      const item = {
+        productId: product.id,
+        name: product.name,
+        price: product.price,
+        amount: 0,
+      };
+
+      setDetails([...details, item]);
     } else {
       alert("No hay resultados");
     }
@@ -42,57 +57,48 @@ export default function NewOrder(props: { data: any }) {
   };
 
   const subtractProducts = (index: number) => {
-    const allProducts = [...products];
+    const allItems = [...details];
 
-    if (allProducts[index].amount === 0) return;
+    if (allItems[index].amount === 0) return;
 
-    allProducts[index].amount--;
+    allItems[index].amount--;
 
-    setProducts(allProducts);
-    updateTotal();
+    setDetails(allItems);
   };
 
   const increaseProducts = (index: number) => {
-    const allProducts = [...products];
+    const allItems = [...details];
 
-    allProducts[index].amount++;
+    allItems[index].amount++;
 
-    setProducts(allProducts);
-    updateTotal();
+    setDetails(allItems);
   };
 
   const updateTotal = () => {
-    if (products.length === 0) {
+    console.log(">> details", details);
+    if (details.length === 0) {
       setTotal(0);
       return;
     }
 
     let newTotal = 0;
 
-    products.map((product) => newTotal += product.amount * product.price);
+    details.map((item) => newTotal += item.amount * item.price);
     setTotal(newTotal);
   };
 
   const removeProductOrder = (id: number) => {
-    const allProducts = products.filter((product) => product.id !== id);
-    setProducts(allProducts);
+    const allItems = details.filter((item) => item.productId !== id);
+    console.log(">> allItems", allItems);
+    setDetails(allItems);
   };
 
   const handleOrdering = async (e: any) => {
     e.preventDefault();
 
-    const order: any[] = [];
-
-    products.map((product: any) => (
-      order.push({
-        customerId: customer.id,
-        productId: product.id,
-        amount: product.amount,
-      })
-    ));
-    const resp = await fetch("http://localhost:3001/orders", {
+    const resp = await fetch(`http://localhost:3001/orders/${customer.id}`, {
       method: "POST",
-      body: JSON.stringify(order),
+      body: JSON.stringify(details),
     });
 
     if (resp.status != 201) {
@@ -121,10 +127,10 @@ export default function NewOrder(props: { data: any }) {
       />
 
       <ul class="resumen">
-        {products.map((product: any, index: number) => (
+        {details.map((item: any, index: number) => (
           <AmountProduct
-            key={product.id}
-            data={product}
+            key={item.productId}
+            data={item}
             subtractProducts={subtractProducts}
             increaseProducts={increaseProducts}
             removeProductOrder={removeProductOrder}

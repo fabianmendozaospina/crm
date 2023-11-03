@@ -1,5 +1,5 @@
 export default function AmountProduct(props: any) {
-  const { id, name, price, amount } = props.data;
+  const { productId, name, price, amount } = props.data;
 
   return (
     <li>
@@ -24,11 +24,10 @@ export default function AmountProduct(props: any) {
         <button
           type="button"
           class="btn btn-rojo"
-          onClick={() => props.removeProductOrder(id)}
+          onClick={() => props.removeProductOrder(productId)}
         >
-          <i class="fas fa-minus-circle">
-            Eliminar Producto
-          </i>
+          <i class="fas fa-times"></i>
+          Eliminar Producto
         </button>
       </div>
     </li>

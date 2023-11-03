@@ -12,7 +12,7 @@ const router = new Router();
 router
   .get("/orders", getOrders)
   .get("/orders/:id", getOrder)
-  .post("/orders", postOrder)
+  .post("/orders/:customerId", postOrder)
   .put("/orders/:id", putOrder)
   .delete("/orders/:id", deleteOrder);
 
