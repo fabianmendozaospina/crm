@@ -1,6 +1,6 @@
 export default function AmountProduct(props: any) {
   const { id, name, price, amount } = props.data;
-  console.log(">>props.index", props.index);
+
   return (
     <li>
       <div class="texto-producto">
@@ -21,7 +21,11 @@ export default function AmountProduct(props: any) {
           >
           </i>
         </div>
-        <button type="button" class="btn btn-rojo">
+        <button
+          type="button"
+          class="btn btn-rojo"
+          onClick={() => props.removeProductOrder(id)}
+        >
           <i class="fas fa-minus-circle">
             Eliminar Producto
           </i>

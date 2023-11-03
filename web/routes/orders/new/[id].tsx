@@ -20,7 +20,6 @@ export const handler: Handlers = {
 
 export default function New({ data }: PageProps) {
   const { customer } = data;
-  console.log("-->>customer", customer);
 
   return (
     <Layout>

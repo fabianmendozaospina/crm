@@ -7,6 +7,7 @@ export default function NewOrder(props: { data: any }) {
   const customer = props.data;
   const [search, setSearch] = useState("");
   const [products, setProducts] = useState(emtyArray);
+  const [total, setTotal] = useState(0);
 
   const searchProduct = async (e: any) => {
     e.preventDefault();
@@ -48,6 +49,7 @@ export default function NewOrder(props: { data: any }) {
     allProducts[index].amount--;
 
     setProducts(allProducts);
+    updateTotal();
   };
 
   const increaseProducts = (index: number) => {
@@ -56,6 +58,49 @@ export default function NewOrder(props: { data: any }) {
     allProducts[index].amount++;
 
     setProducts(allProducts);
+    updateTotal();
+  };
+
+  const updateTotal = () => {
+    if (products.length === 0) {
+      setTotal(0);
+      return;
+    }
+
+    let newTotal = 0;
+
+    products.map((product) => newTotal += product.amount * product.price);
+    setTotal(newTotal);
+  };
+
+  const removeProductOrder = (id: number) => {
+    const allProducts = products.filter((product) => product.id !== id);
+    setProducts(allProducts);
+  };
+
+  const handleOrdering = async (e: any) => {
+    e.preventDefault();
+
+    const order: any[] = [];
+
+    products.map((product: any) => (
+      order.push({
+        customerId: customer.id,
+        productId: product.id,
+        amount: product.amount,
+      })
+    ));
+    const resp = await fetch("http://localhost:3001/orders", {
+      method: "POST",
+      body: JSON.stringify(order),
+    });
+
+    if (resp.status != 201) {
+      alert("Error al Guardar!");
+      return;
+    }
+
+    alert("Guardado con éxito!");
   };
 
   return (
@@ -82,10 +127,27 @@ export default function NewOrder(props: { data: any }) {
             data={product}
             subtractProducts={subtractProducts}
             increaseProducts={increaseProducts}
+            removeProductOrder={removeProductOrder}
             index={index}
           />
         ))}
       </ul>
+
+      <p class="total">
+        Total: <span>$ {total}</span>
+      </p>
+
+      {total > 0
+        ? (
+          <form onSubmit={handleOrdering}>
+            <input
+              type="submit"
+              class="btn btn-verde btn-block"
+              value="Ordering"
+            />
+          </form>
+        )
+        : null}
     </>
   );
 }
