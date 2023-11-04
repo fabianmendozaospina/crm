@@ -16,8 +16,36 @@ export default function Order(props: { key: number; data: any }) {
 
     let newTotal = 0;
 
-    orderDetails.map((item) => newTotal += item.amount * item.products.price);
+    orderDetails.map((item: any) =>
+      newTotal += item.amount * item.products.price
+    );
     setTotal(newTotal);
+  };
+
+  const deleteOrder = async (id: number) => {
+    console.log("Eliminando...", id);
+
+    if (confirm("Are you sure?")) {
+      const resp = await fetch(`http://localhost:3001/orders/${id}`, {
+        method: "DELETE",
+      });
+      if (resp.status != 200) {
+        const data = await resp.json();
+        console.log(">> data", data);
+        const { error } = data;
+
+        if (error && error.code == "23503") {
+          alert(
+            "El pedido no se puede eliminar ya que tiene al menos un cliente",
+          );
+        } else {
+          alert("Error al Eliminar");
+        }
+        return;
+      }
+
+      alert("Eliminado con éxito!");
+    }
   };
 
   return (
@@ -42,7 +70,11 @@ export default function Order(props: { key: number; data: any }) {
         <p class="total">Total: ${total}</p>
       </div>
       <div class="acciones">
-        <button type="button" class="btn btn-rojo btn-eliminar">
+        <button
+          type="button"
+          class="btn btn-rojo btn-eliminar"
+          onClick={() => deleteOrder(id)}
+        >
           <i class="fas fa-times"></i>
           Delete Order
         </button>
