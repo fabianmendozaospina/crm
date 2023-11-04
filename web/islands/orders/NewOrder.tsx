@@ -75,7 +75,6 @@ export default function NewOrder(props: { data: any }) {
   };
 
   const updateTotal = () => {
-    console.log(">> details", details);
     if (details.length === 0) {
       setTotal(0);
       return;

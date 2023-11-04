@@ -13,7 +13,25 @@ export const getOrders = async (
   try {
     const { data: orders, error } = await supabase
       .from("orders")
-      .select("*");
+      .select(`
+        id,
+        customerId,
+        customers (
+          id,
+          name,
+          lastName
+        ),
+        orderDetails (
+          orderId,
+          productId,
+          amount,
+          products (
+            id,
+            name,
+            price
+          )          
+        )
+      `);
 
     if (error) {
       throw new Error(error.message);
@@ -112,6 +130,7 @@ export const postOrder = async (
     }
 
     const details: any = [];
+
     data.map((product: any) => {
       details.push({
         orderId: orders[0].id,

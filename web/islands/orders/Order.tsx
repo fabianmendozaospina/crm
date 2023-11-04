@@ -1,52 +1,48 @@
+import { useEffect, useState } from "preact/hooks";
+
 export default function Order(props: { key: number; data: any }) {
-  const { id, name, lastName, company, email, phone } = props.data;
+  const { id, customers, orderDetails } = props.data;
+  const [total, setTotal] = useState(0);
 
-  const deleteOrder = async (id: number) => {
-    console.log("Eliminando...", id);
+  useEffect(() => {
+    updateTotal();
+  }, []);
 
-    if (confirm("Are you sure?")) {
-      const resp = await fetch(`http://localhost:3001/Orders/${id}`, {
-        method: "DELETE",
-      });
-      if (resp.status != 200) {
-        const data = await resp.json();
-        console.log(">> data", data);
-        const { error } = data;
-
-        if (error && error.code == "23503") {
-          alert(
-            "El cliente no se puede eliminar ya que tiene al menos un pedido",
-          );
-        } else {
-          alert("Error al Eliminar");
-        }
-        return;
-      }
-
-      alert("Eliminado con éxito!");
+  const updateTotal = () => {
+    if (orderDetails.length === 0) {
+      setTotal(0);
+      return;
     }
+
+    let newTotal = 0;
+
+    orderDetails.map((item) => newTotal += item.amount * item.products.price);
+    setTotal(newTotal);
   };
 
   return (
-    <li class="mt-4 p-8 pt-0 pb-0 pl-8 pr-0 border-b border-solid border-gray-300">
-      <div class="flex-0 flex-shrink-0">
-        <p class="text-green-500 font-bold text-md">
-          {name} {lastName}
-        </p>
-        <p class="text-gray-600 font-bold text-md">{company}</p>
-        <p>{email}</p>
-        <p>Phone: {phone}</p>
+    <li class="pedido">
+      <div class="info-pedido">
+        <p class="id">ID: {id}</p>
+        <p class="nombre">Customer: {customers.name} {customers.lastName}</p>
+
+        <div class="articulos-pedido">
+          <p class="productos">Order Items:</p>
+          <ul>
+            {orderDetails.map((item: any) => (
+              <li key={item.orderId + item.productId}>
+                <p>{item.products.name}</p>
+                <p>Precio: ${item.products.price}</p>
+                <p>Cantidad: {item.amount}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p class="total">Total: ${total}</p>
       </div>
       <div class="acciones">
-        <a href={`/Orders/edit/${id}`} class="btn btn-azul">
-          <i class="fas fa-pen-alt"></i>
-          Edit Order
-        </a>
-        <button
-          type="button"
-          class="btn btn-rojo btn-eliminar"
-          onClick={() => deleteOrder(id)}
-        >
+        <button type="button" class="btn btn-rojo btn-eliminar">
           <i class="fas fa-times"></i>
           Delete Order
         </button>

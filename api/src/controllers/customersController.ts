@@ -7,8 +7,8 @@ export const getCustomers = async (
   ctx: Context,
   next: () => Promise<unknown>,
 ) => {
-  let response = {};
   console.log("Getting customers");
+  let response = {};
 
   try {
     const { data: customers, error } = await supabase
@@ -49,8 +49,8 @@ export const getCustomers = async (
 };
 
 export const getCustomer = async (ctx: any, next: () => Promise<unknown>) => {
-  let response = {};
   console.log("Getting a customer");
+  let response = {};
 
   try {
     const { data: customers, error } = await supabase
