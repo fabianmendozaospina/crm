@@ -34,7 +34,7 @@ export const getOrders = async (
       `);
 
     if (error) {
-      throw new Error(error.message);
+      throw new Error(JSON.stringify(error));
     }
 
     if (!orders || orders.length == 0) {
@@ -56,7 +56,9 @@ export const getOrders = async (
   } catch (error) {
     response = {
       success: false,
-      error: error.message || error,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
     };
     ctx.response.status = 500;
     ctx.response.body = response;
@@ -75,7 +77,7 @@ export const getOrder = async (ctx: any, next: () => Promise<unknown>) => {
       .eq("id", ctx.params.id);
 
     if (error) {
-      throw new Error(error.message);
+      throw new Error(JSON.stringify(error));
     }
 
     if (!order || order.length == 0) {
@@ -97,7 +99,9 @@ export const getOrder = async (ctx: any, next: () => Promise<unknown>) => {
   } catch (error) {
     response = {
       success: false,
-      error: error.message || error,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
     };
     ctx.response.status = 500;
     ctx.response.body = response;
@@ -175,13 +179,16 @@ export const postOrder = async (
   }
 };
 
-export const putOrder = async (ctx: any, next: () => Promise<unknown>) => {
-  let response = {};
-  const body = ctx.request.body();
-  const data = await body.value;
+export const putOrder = async (
+  ctx: any,
+  next: () => Promise<unknown>,
+) => {
   console.log("Updating a order");
+  let response = {};
 
   try {
+    const body = ctx.request.body();
+    const data = await body.value;
     const { data: order, error } = await supabase
       .from("orders")
       .update(data)
@@ -189,7 +196,7 @@ export const putOrder = async (ctx: any, next: () => Promise<unknown>) => {
       .select();
 
     if (error) {
-      throw new Error(error.message);
+      throw new Error(JSON.stringify(error));
     }
 
     if (!order || order.length == 0) {
@@ -211,7 +218,9 @@ export const putOrder = async (ctx: any, next: () => Promise<unknown>) => {
   } catch (error) {
     response = {
       success: false,
-      error: error.message || error,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
     };
     ctx.response.status = 500;
     ctx.response.body = response;
@@ -223,20 +232,20 @@ export const deleteOrder = async (
   ctx: any,
   next: () => Promise<unknown>,
 ) => {
-  let response = {};
   console.log("Deleting a order");
+  let response = {};
 
   try {
-    const { data: order, error: error1 } = await supabase
+    const { data: orders, error: errorSelect } = await supabase
       .from("orders")
       .select("*")
       .eq("id", ctx.params.id);
 
-    if (error1) {
-      throw new Error(error1.message);
+    if (errorSelect) {
+      throw new Error(JSON.stringify(errorSelect));
     }
 
-    if (!order || order.length == 0) {
+    if (!orders || orders.length == 0) {
       response = {
         success: false,
       };
@@ -245,13 +254,13 @@ export const deleteOrder = async (
       return;
     }
 
-    const { error: error2 } = await supabase
+    const { error: errorDelete } = await supabase
       .from("orders")
       .delete()
       .eq("id", ctx.params.id);
 
-    if (error2) {
-      throw new Error(error2.message);
+    if (errorDelete) {
+      throw new Error(JSON.stringify(errorDelete));
     }
 
     response = {
@@ -262,7 +271,9 @@ export const deleteOrder = async (
   } catch (error) {
     response = {
       success: false,
-      error: error.message || error,
+      error: typeof error.message == "string"
+        ? JSON.parse(error.message)
+        : error,
     };
     ctx.response.status = 500;
     ctx.response.body = response;

@@ -2,12 +2,14 @@ import { Application } from "../../deps.ts";
 import customersRouter from "./customersRouter.ts";
 import productsRouter from "./productsRouter.ts";
 import ordersRouter from "./ordersRouter.ts";
+import usersRouter from "./usersRouter.ts";
 
 const initRouters = (app: Application) => {
   app
     .use(customersRouter.routes())
     .use(productsRouter.routes())
-    .use(ordersRouter.routes());
+    .use(ordersRouter.routes())
+    .use(usersRouter.routes());
 };
 
 export default initRouters;

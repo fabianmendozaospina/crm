@@ -15,3 +15,7 @@ export {
   createClient,
   SupabaseClient,
 } from "https://esm.sh/@supabase/supabase-js@2.21.0";
+
+export * as bcrypt from "https://deno.land/x/bcrypt@v0.3.0/mod.ts";
+
+export { create, getNumericDate } from "https://deno.land/x/djwt@v3.0.1/mod.ts";
