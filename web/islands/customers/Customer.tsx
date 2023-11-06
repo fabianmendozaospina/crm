@@ -2,15 +2,12 @@ export default function Customer(props: { key: number; data: any }) {
   const { id, name, lastName, company, email, phone } = props.data;
 
   const deleteCustomer = async (id: number) => {
-    console.log("Eliminando...", id);
-
     if (confirm("Are you sure?")) {
       const resp = await fetch(`http://localhost:3001/customers/${id}`, {
         method: "DELETE",
       });
       if (resp.status != 200) {
         const data = await resp.json();
-        console.log(">> data", data);
         const { error } = data;
 
         if (error && error.code == "23503") {

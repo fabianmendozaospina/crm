@@ -8,23 +8,25 @@ import * as $2 from "./routes/customers/edit/[id].tsx";
 import * as $3 from "./routes/customers/list.tsx";
 import * as $4 from "./routes/customers/new.tsx";
 import * as $5 from "./routes/index.tsx";
-import * as $6 from "./routes/orders/edit/[id].tsx";
-import * as $7 from "./routes/orders/list.tsx";
-import * as $8 from "./routes/orders/new/[id].tsx";
-import * as $9 from "./routes/products/edit/[id].tsx";
-import * as $10 from "./routes/products/list.tsx";
-import * as $11 from "./routes/products/new.tsx";
-import * as $$0 from "./islands/customers/Customer.tsx";
-import * as $$1 from "./islands/customers/EditCustomer.tsx";
-import * as $$2 from "./islands/customers/NewCustomer.tsx";
-import * as $$3 from "./islands/orders/AmountProduct.tsx";
-import * as $$4 from "./islands/orders/EditOrder.tsx";
-import * as $$5 from "./islands/orders/NewOrder.tsx";
-import * as $$6 from "./islands/orders/Order.tsx";
-import * as $$7 from "./islands/orders/SearchProduct.tsx";
-import * as $$8 from "./islands/products/EditProduct.tsx";
-import * as $$9 from "./islands/products/NewProduct.tsx";
-import * as $$10 from "./islands/products/Product.tsx";
+import * as $6 from "./routes/login.tsx";
+import * as $7 from "./routes/orders/edit/[id].tsx";
+import * as $8 from "./routes/orders/list.tsx";
+import * as $9 from "./routes/orders/new/[id].tsx";
+import * as $10 from "./routes/products/edit/[id].tsx";
+import * as $11 from "./routes/products/list.tsx";
+import * as $12 from "./routes/products/new.tsx";
+import * as $$0 from "./islands/auth/Login.tsx";
+import * as $$1 from "./islands/customers/Customer.tsx";
+import * as $$2 from "./islands/customers/EditCustomer.tsx";
+import * as $$3 from "./islands/customers/NewCustomer.tsx";
+import * as $$4 from "./islands/orders/AmountProduct.tsx";
+import * as $$5 from "./islands/orders/EditOrder.tsx";
+import * as $$6 from "./islands/orders/NewOrder.tsx";
+import * as $$7 from "./islands/orders/Order.tsx";
+import * as $$8 from "./islands/orders/SearchProduct.tsx";
+import * as $$9 from "./islands/products/EditProduct.tsx";
+import * as $$10 from "./islands/products/NewProduct.tsx";
+import * as $$11 from "./islands/products/Product.tsx";
 
 const manifest = {
   routes: {
@@ -34,25 +36,27 @@ const manifest = {
     "./routes/customers/list.tsx": $3,
     "./routes/customers/new.tsx": $4,
     "./routes/index.tsx": $5,
-    "./routes/orders/edit/[id].tsx": $6,
-    "./routes/orders/list.tsx": $7,
-    "./routes/orders/new/[id].tsx": $8,
-    "./routes/products/edit/[id].tsx": $9,
-    "./routes/products/list.tsx": $10,
-    "./routes/products/new.tsx": $11,
+    "./routes/login.tsx": $6,
+    "./routes/orders/edit/[id].tsx": $7,
+    "./routes/orders/list.tsx": $8,
+    "./routes/orders/new/[id].tsx": $9,
+    "./routes/products/edit/[id].tsx": $10,
+    "./routes/products/list.tsx": $11,
+    "./routes/products/new.tsx": $12,
   },
   islands: {
-    "./islands/customers/Customer.tsx": $$0,
-    "./islands/customers/EditCustomer.tsx": $$1,
-    "./islands/customers/NewCustomer.tsx": $$2,
-    "./islands/orders/AmountProduct.tsx": $$3,
-    "./islands/orders/EditOrder.tsx": $$4,
-    "./islands/orders/NewOrder.tsx": $$5,
-    "./islands/orders/Order.tsx": $$6,
-    "./islands/orders/SearchProduct.tsx": $$7,
-    "./islands/products/EditProduct.tsx": $$8,
-    "./islands/products/NewProduct.tsx": $$9,
-    "./islands/products/Product.tsx": $$10,
+    "./islands/auth/Login.tsx": $$0,
+    "./islands/customers/Customer.tsx": $$1,
+    "./islands/customers/EditCustomer.tsx": $$2,
+    "./islands/customers/NewCustomer.tsx": $$3,
+    "./islands/orders/AmountProduct.tsx": $$4,
+    "./islands/orders/EditOrder.tsx": $$5,
+    "./islands/orders/NewOrder.tsx": $$6,
+    "./islands/orders/Order.tsx": $$7,
+    "./islands/orders/SearchProduct.tsx": $$8,
+    "./islands/products/EditProduct.tsx": $$9,
+    "./islands/products/NewProduct.tsx": $$10,
+    "./islands/products/Product.tsx": $$11,
   },
   baseUrl: import.meta.url,
 };

@@ -88,7 +88,6 @@ export default function NewOrder(props: { data: any }) {
 
   const removeProductOrder = (id: number) => {
     const allItems = details.filter((item) => item.productId !== id);
-    console.log(">> allItems", allItems);
     setDetails(allItems);
   };
 

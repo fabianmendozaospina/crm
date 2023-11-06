@@ -31,7 +31,6 @@ export default function Order(props: { key: number; data: any }) {
       });
       if (resp.status != 200) {
         const data = await resp.json();
-        console.log(">> data", data);
         const { error } = data;
 
         if (error && error.code == "23503") {

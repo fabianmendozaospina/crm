@@ -13,7 +13,6 @@ export default function EditCustomer(props: { data: any }) {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(">>> customer.id", customer.id);
     const resp = await fetch(`http://localhost:3001/customers/${customer.id}`, {
       method: "PUT",
       body: JSON.stringify(customer),
