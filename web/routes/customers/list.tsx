@@ -7,6 +7,10 @@ export const handler: Handlers = {
   async GET(_, ctx) {
     const resp = await fetch("http://localhost:3001/customers", {
       method: "GET",
+      headers: {
+        Authorization:
+          `Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTkzOTc0NDYsImVtYWlsIjoiY29ycmVvQGNvcnJlby5jb20iLCJuYW1lIjoiRmFiacOhbiIsImlkIjoyfQ.gGU8A9laxv2t8OI6gT_Tn3hMwLNbCc8Cbb2VkyeRuM90F_Hr4eh1L0hCO2keFI5lkAh4JAYqb2Snop95CwAkLg`,
+      },
     });
 
     if (resp.status === 404) {
