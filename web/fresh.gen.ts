@@ -4,17 +4,19 @@
 
 import * as $0 from "./routes/_404.tsx";
 import * as $1 from "./routes/_app.tsx";
-import * as $2 from "./routes/customers/edit/[id].tsx";
-import * as $3 from "./routes/customers/list.tsx";
-import * as $4 from "./routes/customers/new.tsx";
-import * as $5 from "./routes/index.tsx";
-import * as $6 from "./routes/login.tsx";
-import * as $7 from "./routes/orders/edit/[id].tsx";
-import * as $8 from "./routes/orders/list.tsx";
-import * as $9 from "./routes/orders/new/[id].tsx";
-import * as $10 from "./routes/products/edit/[id].tsx";
-import * as $11 from "./routes/products/list.tsx";
-import * as $12 from "./routes/products/new.tsx";
+import * as $2 from "./routes/api/login.ts";
+import * as $3 from "./routes/api/logout.ts";
+import * as $4 from "./routes/customers/edit/[id].tsx";
+import * as $5 from "./routes/customers/list.tsx";
+import * as $6 from "./routes/customers/new.tsx";
+import * as $7 from "./routes/index.tsx";
+import * as $8 from "./routes/login.tsx";
+import * as $9 from "./routes/orders/edit/[id].tsx";
+import * as $10 from "./routes/orders/list.tsx";
+import * as $11 from "./routes/orders/new/[id].tsx";
+import * as $12 from "./routes/products/edit/[id].tsx";
+import * as $13 from "./routes/products/list.tsx";
+import * as $14 from "./routes/products/new.tsx";
 import * as $$0 from "./islands/auth/Login.tsx";
 import * as $$1 from "./islands/customers/Customer.tsx";
 import * as $$2 from "./islands/customers/EditCustomer.tsx";
@@ -32,17 +34,19 @@ const manifest = {
   routes: {
     "./routes/_404.tsx": $0,
     "./routes/_app.tsx": $1,
-    "./routes/customers/edit/[id].tsx": $2,
-    "./routes/customers/list.tsx": $3,
-    "./routes/customers/new.tsx": $4,
-    "./routes/index.tsx": $5,
-    "./routes/login.tsx": $6,
-    "./routes/orders/edit/[id].tsx": $7,
-    "./routes/orders/list.tsx": $8,
-    "./routes/orders/new/[id].tsx": $9,
-    "./routes/products/edit/[id].tsx": $10,
-    "./routes/products/list.tsx": $11,
-    "./routes/products/new.tsx": $12,
+    "./routes/api/login.ts": $2,
+    "./routes/api/logout.ts": $3,
+    "./routes/customers/edit/[id].tsx": $4,
+    "./routes/customers/list.tsx": $5,
+    "./routes/customers/new.tsx": $6,
+    "./routes/index.tsx": $7,
+    "./routes/login.tsx": $8,
+    "./routes/orders/edit/[id].tsx": $9,
+    "./routes/orders/list.tsx": $10,
+    "./routes/orders/new/[id].tsx": $11,
+    "./routes/products/edit/[id].tsx": $12,
+    "./routes/products/list.tsx": $13,
+    "./routes/products/new.tsx": $14,
   },
   islands: {
     "./islands/auth/Login.tsx": $$0,

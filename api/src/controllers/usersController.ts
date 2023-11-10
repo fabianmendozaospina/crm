@@ -1,4 +1,5 @@
 import Supabase from "../repository/supabase.ts";
+import SecretKey from "../helpers/key.ts";
 import { bcrypt, Context, create, getNumericDate } from "../../deps.ts";
 
 const supabase = Supabase.getInstance().client;
@@ -95,12 +96,7 @@ export const loginUser = async (
       return;
     }
 
-    const key = await crypto.subtle.generateKey(
-      { name: "HMAC", hash: "SHA-512" },
-      true,
-      ["sign", "verify"],
-    );
-
+    const key = await SecretKey.getInstance();
     const token = await create(
       {
         alg: "HS512",
@@ -114,6 +110,10 @@ export const loginUser = async (
       },
       key,
     );
+
+    const kv = await Deno.openKv();
+    const tokenKey = ["token", users[0].email];
+    await kv.set(tokenKey, token);
 
     response = {
       success: true,
