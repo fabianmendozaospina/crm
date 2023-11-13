@@ -1,12 +1,36 @@
+import { Handlers, PageProps } from "$fresh/server.ts";
 import Layout from "../../components/layout/index.tsx";
 import NewCustomer from "../../islands/customers/NewCustomer.tsx";
+import { getCookies } from "$std/http/cookie.ts";
 
-export default function New() {
+export const handler: Handlers = {
+  async GET(req, ctx) {
+    const token = getCookies(req.headers).auth;
+    const isAllowed = token ? true : false;
+
+    if (!isAllowed) {
+      return new Response("", {
+        status: 307,
+        headers: {
+          Location: "/login",
+        },
+      });
+    }
+
+    return await ctx.render({ token });
+  },
+};
+
+export default function New({ data }: PageProps) {
+  const { token } = data;
+
   return (
     <Layout
       showOptions={true}
     >
-      <NewCustomer />
+      <NewCustomer
+        token={token}
+      />
     </Layout>
   );
 }

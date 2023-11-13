@@ -2,19 +2,47 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import Layout from "../../components/layout/index.tsx";
 import Order from "../../islands/orders/Order.tsx";
 import Spinner from "../../components/layout/Spinner.tsx";
+import { getCookies } from "$std/http/cookie.ts";
 
 export const handler: Handlers = {
-  async GET(_, ctx) {
-    const resp = await fetch("http://localhost:3001/orders", {
-      method: "GET",
-    });
+  async GET(req, ctx) {
+    const token = getCookies(req.headers).auth;
+    const isAllowed = token ? true : false;
 
-    if (resp.status === 404) {
-      return ctx.render(null);
+    if (!isAllowed) {
+      return new Response("", {
+        status: 307,
+        headers: {
+          Location: "/login",
+        },
+      });
     }
 
-    const data = await resp.json();
-    return await ctx.render(data);
+    try {
+      const resp = await fetch("http://localhost:3001/orders", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (resp.status === 404) {
+        return ctx.render(null);
+      }
+
+      const data = await resp.json();
+      return await ctx.render(data);
+    } catch (error) {
+      // Error with authorization.
+      if (error.response.status == 500) {
+        return new Response("", {
+          status: 307,
+          headers: {
+            Location: "/login",
+          },
+        });
+      }
+    }
   },
 };
 

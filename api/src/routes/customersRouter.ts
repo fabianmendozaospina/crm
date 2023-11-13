@@ -6,12 +6,11 @@ import {
   postCustomer,
   putCustomer,
 } from "../controllers/customersController.ts";
-import { checkAuthorization } from "../middleware/auth.ts";
 
 const router = new Router();
 
 router
-  .get("/customers", checkAuthorization, getCustomers)
+  .get("/customers", getCustomers)
   .get("/customers/:id", getCustomer)
   .post("/customers", postCustomer)
   .put("/customers/:id", putCustomer)

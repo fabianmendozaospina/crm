@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 
-export default function NewCustomer() {
+export default function NewCustomer(props: { token: string }) {
   const [customer, setCustomer] = useState({
     name: "",
     lastName: "",
@@ -22,6 +22,9 @@ export default function NewCustomer() {
     const resp = await fetch("http://localhost:3001/customers", {
       method: "POST",
       body: JSON.stringify(customer),
+      headers: {
+        Authorization: `Bearer ${props.token}`,
+      },
     });
 
     if (resp.status != 201) {
@@ -101,7 +104,7 @@ export default function NewCustomer() {
         <div class="enviar">
           <input
             type="submit"
-            class="btn btn-a7.1zul"
+            class="btn btn-azul"
             value="Add Customer"
             style={"cursor: pointer"}
             disabled={validateCustomer()}
