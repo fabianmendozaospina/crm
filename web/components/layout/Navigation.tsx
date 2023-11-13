@@ -1,4 +1,7 @@
-export default function Navigacion() {
+export default function Navigacion(props: { showOptions: boolean }) {
+  if (!props.showOptions) {
+    return null;
+  }
   return (
     <aside class="sidebar col-3">
       <h2>

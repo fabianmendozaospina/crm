@@ -1,9 +1,11 @@
 import Layout from "../../components/layout/index.tsx";
 
-export default function Login() {
+export default function Login(props: { showOptions: boolean }) {
   return (
     <>
-      <Layout>
+      <Layout
+        showOptions={props.showOptions}
+      >
         <div class="login">
           <h2>Login</h2>
 

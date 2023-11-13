@@ -21,7 +21,9 @@ export const handler: Handlers = {
 export default function Edit({ data }: PageProps) {
   const { product } = data;
   return (
-    <Layout>
+    <Layout
+      showOptions={true}
+    >
       <EditProduct
         data={product}
       />

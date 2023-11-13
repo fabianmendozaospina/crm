@@ -2,7 +2,7 @@ import { Head } from "$fresh/runtime.ts";
 import Header from "./Header.tsx";
 import Navigation from "./Navigation.tsx";
 
-export default function Layout({ children }: any) {
+export default function Layout(props: { showOptions: boolean; children: any }) {
   return (
     <>
       <Head>
@@ -20,12 +20,16 @@ export default function Layout({ children }: any) {
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
         />
       </Head>
-      <Header />
+      <Header
+        showOptions={props.showOptions}
+      />
       <div class="grid contenedor contenido-principal">
-        <Navigation />
+        <Navigation
+          showOptions={props.showOptions}
+        />
         <main class="caja-contenido col-9">
           <div>
-            {children}
+            {props.children}
           </div>
         </main>
       </div>

@@ -22,7 +22,9 @@ export default function New({ data }: PageProps) {
   const { customer } = data;
 
   return (
-    <Layout>
+    <Layout
+      showOptions={true}
+    >
       <NewOrder
         data={customer}
       />

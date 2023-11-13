@@ -25,7 +25,9 @@ export default function List({ data }: PageProps) {
   if (!orders.length) return <Spinner />;
 
   return (
-    <Layout>
+    <Layout
+      showOptions={true}
+    >
       <h2>Orders</h2>
 
       {orders &&

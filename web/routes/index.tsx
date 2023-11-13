@@ -8,9 +8,8 @@ interface Data {
 
 export const handler: Handlers = {
   GET(req, ctx) {
-    const cookies = getCookies(req.headers);
-    console.log(">> index.getToken", cookies.auth);
-    const isAllowed = cookies.auth ? true : false;
+    const token = getCookies(req.headers).auth;
+    const isAllowed = token ? true : false;
 
     if (isAllowed) {
       return new Response("", {
@@ -28,7 +27,12 @@ export const handler: Handlers = {
 export default function Home({ data }: PageProps<Data>) {
   return (
     <>
-      {!data.isAllowed ? <Login /> : <a href="/api/logout">Logout</a>}
+      {!data.isAllowed &&
+        (
+          <Login
+            showOptions={false}
+          />
+        )}
     </>
   );
 }

@@ -3,7 +3,9 @@ import NewCustomer from "../../islands/customers/NewCustomer.tsx";
 
 export default function New() {
   return (
-    <Layout>
+    <Layout
+      showOptions={true}
+    >
       <NewCustomer />
     </Layout>
   );

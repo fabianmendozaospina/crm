@@ -3,7 +3,9 @@ import NewOrder from "../../islands/products/NewProduct.tsx";
 
 export default function New() {
   return (
-    <Layout>
+    <Layout
+      showOptions={true}
+    >
       <NewOrder />
     </Layout>
   );

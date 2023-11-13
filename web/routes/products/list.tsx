@@ -25,7 +25,9 @@ export default function List({ data }: PageProps) {
   if (!products.length) return <Spinner />;
 
   return (
-    <Layout>
+    <Layout
+      showOptions={true}
+    >
       <h2>Products</h2>
       <a
         href="/products/new"
