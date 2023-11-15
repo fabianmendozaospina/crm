@@ -27,10 +27,13 @@ export default function EditProduct(props: { data: any }) {
     }
 
     try {
-      const resp = await fetch(`http://localhost:3001/products/${product.id}`, {
-        method: "PUT",
-        body: formData,
-      });
+      const resp = await fetch(
+        `http://localhost:3001/api/products/${product.id}`,
+        {
+          method: "PUT",
+          body: formData,
+        },
+      );
 
       if (resp.status != 200) {
         alert("Error al Guardar!");

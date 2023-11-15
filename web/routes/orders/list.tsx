@@ -19,10 +19,11 @@ export const handler: Handlers = {
     }
 
     try {
-      const resp = await fetch("http://localhost:3001/orders", {
+      const resp = await fetch(`${Deno.env.get("API_URL")}/api/orders`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
+          Origin: Deno.env.get("FRONTEND_URL") ?? "",
         },
       });
 

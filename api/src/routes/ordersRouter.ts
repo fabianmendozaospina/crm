@@ -10,6 +10,7 @@ import {
 const router = new Router();
 
 router
+  .prefix("/api")
   .get("/orders", getOrders)
   .get("/orders/:id", getOrder)
   .post("/orders/:customerId", postOrder)

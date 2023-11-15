@@ -5,8 +5,11 @@ import EditCustomer from "../../../islands/customers/EditCustomer.tsx";
 export const handler: Handlers = {
   async GET(_, ctx) {
     const id = ctx.params.id;
-    const resp = await fetch(`http://localhost:3001/customers/${id}`, {
+    const resp = await fetch(`${Deno.env.get("API_URL")}/api/customers/${id}`, {
       method: "GET",
+      headers: {
+        Origin: Deno.env.get("FRONTEND_URL") ?? "",
+      },
     });
 
     if (resp.status === 404) {

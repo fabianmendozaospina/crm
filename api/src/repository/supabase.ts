@@ -1,5 +1,4 @@
 import { createClient, SupabaseClient } from "../../deps.ts";
-import "https://deno.land/std@0.193.0/dotenv/load.ts";
 
 class Supabase {
   private _client: SupabaseClient;

@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 
-export default function NewProduct() {
+export default function NewProduct(props: { token: string }) {
   const [product, setProduct] = useState({
     name: "",
     price: "",
@@ -27,9 +27,13 @@ export default function NewProduct() {
     formData.append("image", file);
 
     try {
-      const resp = await fetch("http://localhost:3001/products", {
+      const resp = await fetch("http://localhost:3001/api/products", {
         method: "POST",
         body: formData,
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+          Origin: "http://localhost:8000",
+        },
       });
 
       if (resp.status != 201) {

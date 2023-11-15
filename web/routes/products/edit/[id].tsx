@@ -5,8 +5,11 @@ import EditProduct from "../../../islands/products/EditProduct.tsx";
 export const handler: Handlers = {
   async GET(_, ctx) {
     const id = ctx.params.id;
-    const resp = await fetch(`http://localhost:3001/products/${id}`, {
+    const resp = await fetch(`${Deno.env.get("API_URL")}/api/products/${id}`, {
       method: "GET",
+      headers: {
+        Origin: Deno.env.get("FRONTEND_URL") ?? "",
+      },
     });
 
     if (resp.status === 404) {

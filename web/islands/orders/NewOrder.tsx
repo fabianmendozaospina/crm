@@ -17,7 +17,7 @@ export default function NewOrder(props: { data: any }) {
     e.preventDefault();
 
     const resp = await fetch(
-      `http://localhost:3001/products/search/${search}`,
+      `http://localhost:3001/api/products/search/${search}`,
       {
         method: "POST",
       },
@@ -94,10 +94,13 @@ export default function NewOrder(props: { data: any }) {
   const handleOrdering = async (e: any) => {
     e.preventDefault();
 
-    const resp = await fetch(`http://localhost:3001/orders/${customer.id}`, {
-      method: "POST",
-      body: JSON.stringify(details),
-    });
+    const resp = await fetch(
+      `http://localhost:3001/api/orders/${customer.id}`,
+      {
+        method: "POST",
+        body: JSON.stringify(details),
+      },
+    );
 
     if (resp.status != 201) {
       alert("Error al Guardar!");

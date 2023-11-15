@@ -26,7 +26,7 @@ export default function Order(props: { key: number; data: any }) {
     console.log("Eliminando...", id);
 
     if (confirm("Are you sure?")) {
-      const resp = await fetch(`http://localhost:3001/orders/${id}`, {
+      const resp = await fetch(`http://localhost:3001/api/orders/${id}`, {
         method: "DELETE",
       });
       if (resp.status != 200) {

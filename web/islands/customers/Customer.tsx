@@ -3,7 +3,7 @@ export default function Customer(props: { key: number; data: any }) {
 
   const deleteCustomer = async (id: number) => {
     if (confirm("Are you sure?")) {
-      const resp = await fetch(`http://localhost:3001/customers/${id}`, {
+      const resp = await fetch(`http://localhost:3001/api/customers/${id}`, {
         method: "DELETE",
       });
       if (resp.status != 200) {

@@ -11,6 +11,7 @@ import {
 const router = new Router();
 
 router
+  .prefix("/api")
   .get("/products", getProducts)
   .get("/products/:id", getProduct)
   .post("/products", postProduct)

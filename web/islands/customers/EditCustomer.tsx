@@ -13,10 +13,13 @@ export default function EditCustomer(props: { data: any }) {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const resp = await fetch(`http://localhost:3001/customers/${customer.id}`, {
-      method: "PUT",
-      body: JSON.stringify(customer),
-    });
+    const resp = await fetch(
+      `http://localhost:3001/api/customers/${customer.id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(customer),
+      },
+    );
 
     if (resp.status != 200) {
       alert("Error al Guardar!");

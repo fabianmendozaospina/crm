@@ -11,20 +11,28 @@ export const handler: Handlers = {
     };
 
     try {
-      const resp = await fetch("http://localhost:3001/users/login", {
+      const headers = new Headers();
+      const resp = await fetch(`${Deno.env.get("API_URL")}/api/users/login`, {
         method: "POST",
         body: JSON.stringify(credentials),
+        headers: {
+          Origin: Deno.env.get("FRONTEND_URL") ?? "",
+        },
       });
 
       if (resp.status != 200) {
-        alert("Error al autenticar!");
-        return;
+        // TODO: handle with throw.
+        console.log(">> Error al autenticar!");
+        headers.set("location", "/");
+        return new Response(null, {
+          status: 303, // "See Other"
+          headers,
+        });
       }
 
       const data = await resp.json();
       const { token } = data;
 
-      const headers = new Headers();
       setCookie(headers, {
         name: "auth",
         value: token, // this should be a unique value for each session
@@ -35,14 +43,13 @@ export const handler: Handlers = {
         secure: true,
       });
 
-      headers.set("location", "/");
+      headers.set("location", "/customers/list");
       return new Response(null, {
         status: 303, // "See Other"
         headers,
       });
     } catch (error) {
-      console.log(error);
-      alert("Ocurrió un error");
+      console.log(">> Ocurrió un error", error);
       return new Response(null, {
         status: 403,
       });

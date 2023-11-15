@@ -19,11 +19,12 @@ export default function NewCustomer(props: { token: string }) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const resp = await fetch("http://localhost:3001/customers", {
+    const resp = await fetch("http://localhost:3001/api/customers", {
       method: "POST",
       body: JSON.stringify(customer),
       headers: {
         Authorization: `Bearer ${props.token}`,
+        Origin: "http://localhost:8000",
       },
     });
 
