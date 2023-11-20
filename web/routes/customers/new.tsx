@@ -1,7 +1,7 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import Layout from "../../components/layout/index.tsx";
-import NewCustomer from "../../islands/customers/NewCustomer.tsx";
 import { getCookies } from "$std/http/cookie.ts";
+import Layout from "../../components/Layout.tsx";
+import NewCustomer from "../../islands/customers/NewCustomer.tsx";
 
 export const handler: Handlers = {
   async GET(req, ctx) {
@@ -17,20 +17,16 @@ export const handler: Handlers = {
       });
     }
 
-    return await ctx.render({ token });
+    return await ctx.render();
   },
 };
 
-export default function New({ data }: PageProps) {
-  const { token } = data;
-
+export default function New() {
   return (
     <Layout
       showOptions={true}
     >
-      <NewCustomer
-        token={token}
-      />
+      <NewCustomer />
     </Layout>
   );
 }

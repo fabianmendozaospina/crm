@@ -1,4 +1,4 @@
-import Layout from "../../components/layout/index.tsx";
+import Layout from "../../components/Layout.tsx";
 
 export default function Login(props: { showOptions: boolean }) {
   return (
@@ -10,7 +10,7 @@ export default function Login(props: { showOptions: boolean }) {
           <h2>Login</h2>
 
           <div class="contenedor-formulario">
-            <form method="post" action="../../api/login">
+            <form method="post" action="../../api/auth/login">
               <div class="campo">
                 <label>Email</label>
                 <input

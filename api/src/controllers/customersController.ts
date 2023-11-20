@@ -188,7 +188,6 @@ export const deleteCustomer = async (
   next: () => Promise<unknown>,
 ) => {
   let response = {};
-  console.log("Deleting a customer");
 
   try {
     const { data: customers, error: errorSelect } = await supabase

@@ -1,7 +1,7 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import Layout from "../../components/layout/index.tsx";
+import Layout from "../../components/Layout.tsx";
 import Product from "../../islands/products/Product.tsx";
-import Spinner from "../../components/layout/Spinner.tsx";
+import Spinner from "../../components/Spinner.tsx";
 import { getCookies } from "$std/http/cookie.ts";
 
 export const handler: Handlers = {
@@ -23,7 +23,7 @@ export const handler: Handlers = {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
-          Origin: Deno.env.get("FRONTEND_URL") ?? "",
+          Origin: Deno.env.get("WEB_URL") ?? "",
         },
       });
 

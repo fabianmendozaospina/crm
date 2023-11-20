@@ -1,14 +1,17 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import Layout from "../../../components/layout/index.tsx";
-import EditProduct from "../../../islands/products/EditProduct.tsx";
+import { getCookies } from "$std/http/cookie.ts";
+import Layout from "../../components/Layout.tsx";
+import EditProduct from "../../islands/products/EditProduct.tsx";
 
 export const handler: Handlers = {
-  async GET(_, ctx) {
+  async GET(req, ctx) {
     const id = ctx.params.id;
+    const token = getCookies(req.headers).auth;
     const resp = await fetch(`${Deno.env.get("API_URL")}/api/products/${id}`, {
       method: "GET",
       headers: {
-        Origin: Deno.env.get("FRONTEND_URL") ?? "",
+        Authorization: `Bearer ${token}`,
+        Origin: Deno.env.get("WEB_URL") ?? "",
       },
     });
 

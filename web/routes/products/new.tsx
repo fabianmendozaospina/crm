@@ -1,7 +1,7 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import Layout from "../../components/layout/index.tsx";
-import NewProduct from "../../islands/products/NewProduct.tsx";
 import { getCookies } from "$std/http/cookie.ts";
+import Layout from "../../components/Layout.tsx";
+import NewProduct from "../../islands/products/NewProduct.tsx";
 
 export const handler: Handlers = {
   async GET(req, ctx) {

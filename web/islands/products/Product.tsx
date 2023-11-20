@@ -2,8 +2,6 @@ export default function Product(props: { key: number; data: any }) {
   const { id, name, price, image } = props.data;
 
   const deleteProduct = async (id: number) => {
-    console.log("Eliminando...", id);
-
     if (confirm("Are you sure?")) {
       const resp = await fetch(`http://localhost:3001/api/products/${id}`, {
         method: "DELETE",
@@ -36,7 +34,7 @@ export default function Product(props: { key: number; data: any }) {
           : null}
       </div>
       <div class="acciones">
-        <a href={`/products/edit/${id}`} class="btn btn-azul">
+        <a href={`/products/${id}`} class="btn btn-azul">
           <i class="fas fa-pen"></i>
           Edit Product
         </a>

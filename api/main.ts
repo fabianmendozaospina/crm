@@ -6,20 +6,20 @@ const PORT = Number(Deno.env.get("API_PORT"));
 const whitelist = [Deno.env.get("FRONTEND_URL")];
 const app = new Application();
 
-// app.use(async (context, next) => {
-//   // Add the appropriate CORS headers.
-//   context.response.headers.set("Access-Control-Allow-Origin", "*");
-//   context.response.headers.set(
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, PUT, DELETE",
-//   );
-//   context.response.headers.set(
-//     "Access-Control-Allow-Headers",
-//     "Origin, Content-Type",
-//   );
+app.use(async (context, next) => {
+  // Add the appropriate CORS headers.
+  context.response.headers.set("Access-Control-Allow-Origin", "*");
+  context.response.headers.set(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE",
+  );
+  context.response.headers.set(
+    "Access-Control-Allow-Headers",
+    "Origin, Content-Type",
+  );
 
-//   await next();
-// });
+  await next();
+});
 
 app.use(async (context, next) => {
   if (context.request.url.pathname.startsWith("/api")) {

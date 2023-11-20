@@ -1,25 +1,16 @@
-import { useState } from "preact/hooks";
-import Spinner from "../../components/layout/Spinner.tsx";
+import { Signal } from "@preact/signals";
+import Spinner from "../../components/Spinner.tsx";
+import ICustomer from "../../interfaces/ICustomer.ts";
 
-export default function EditCustomer(props: { data: any }) {
-  const [customer, setCustomer] = useState(props.data);
+export default function EditCustomer(props: { data: ICustomer }) {
+  const customer = new Signal(props.data);
 
-  const handleUpdateState = (e: any) => {
-    setCustomer({
-      ...customer,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: Event) => {
     e.preventDefault();
-    const resp = await fetch(
-      `http://localhost:3001/api/customers/${customer.id}`,
-      {
-        method: "PUT",
-        body: JSON.stringify(customer),
-      },
-    );
+    const resp = await fetch(`/api/customers/${customer.value.id}`, {
+      method: "PUT",
+      body: JSON.stringify(customer.value),
+    });
 
     if (resp.status != 200) {
       alert("Error al Guardar!");
@@ -29,8 +20,17 @@ export default function EditCustomer(props: { data: any }) {
     alert("Guardado con éxito!");
   };
 
+  const updateState = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    const name = target.name;
+
+    if (name in customer.value) {
+      (customer.value as any)[name] = target.value;
+    }
+  };
+
   const validateCustomer = () => {
-    const { name, lastName, email, company, phone } = customer;
+    const { name, lastName, email, company, phone } = customer.value;
 
     const valid = !(name.length > 0) || !(lastName.length > 0) ||
       !(email.length > 0) || !(company.length > 0) || !(phone.length > 0);
@@ -46,15 +46,14 @@ export default function EditCustomer(props: { data: any }) {
 
       <form onSubmit={handleSubmit}>
         <legend>Fill out all fields</legend>
-
         <div class="campo">
           <label>Name:</label>
           <input
             type="text"
             placeholder="Customer name"
             name="name"
-            value={customer.name}
-            onChange={handleUpdateState}
+            value={customer.value.name}
+            onChange={updateState}
           />
         </div>
 
@@ -64,8 +63,8 @@ export default function EditCustomer(props: { data: any }) {
             type="text"
             placeholder="Customer last name"
             name="lastName"
-            value={customer.lastName}
-            onChange={handleUpdateState}
+            value={customer.value.lastName}
+            onChange={updateState}
           />
         </div>
 
@@ -75,8 +74,8 @@ export default function EditCustomer(props: { data: any }) {
             type="text"
             placeholder="Customer company"
             name="company"
-            value={customer.company}
-            onChange={handleUpdateState}
+            value={customer.value.company}
+            onChange={updateState}
           />
         </div>
 
@@ -86,8 +85,8 @@ export default function EditCustomer(props: { data: any }) {
             type="email"
             placeholder="Customer email"
             name="email"
-            value={customer.email}
-            onChange={handleUpdateState}
+            value={customer.value.email}
+            onChange={updateState}
           />
         </div>
 
@@ -97,8 +96,8 @@ export default function EditCustomer(props: { data: any }) {
             type="tel"
             placeholder="Customer phone"
             name="phone"
-            value={customer.phone}
-            onChange={handleUpdateState}
+            value={customer.value.phone}
+            onChange={updateState}
           />
         </div>
 

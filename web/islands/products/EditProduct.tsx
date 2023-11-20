@@ -1,34 +1,25 @@
-import { useState } from "preact/hooks";
-import Spinner from "../../components/layout/Spinner.tsx";
+import { Signal } from "@preact/signals";
+import Spinner from "../../components/Spinner.tsx";
+import IProduct from "../../interfaces/IProduct.ts";
 
-export default function EditProduct(props: { data: any }) {
-  const [product, setProduct] = useState(props.data);
-  const [file, setFile] = useState("");
+export default function EditProduct(props: { data: IProduct }) {
+  const product = new Signal(props.data);
+  const file = new Signal<File | null>(null);
 
-  const handleUpdateState = (e: any) => {
-    setProduct({
-      ...product,
-      [e.target.name]: e.target.value,
-    });
-  };
-  const handleUpdateFile = (e: any) => {
-    setFile(e.target.files[0]);
-  };
-
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: Event) => {
     e.preventDefault();
-    console.log("ojooo");
     const formData = new FormData();
-    formData.append("name", product.name);
-    formData.append("price", product.price);
+    formData.append("name", product.value.name);
+    formData.append("price", product.value.price.toString());
 
-    if (file != "") {
-      formData.append("image", file);
+    if (file.value != null) {
+      formData.append("image", file.value);
     }
 
     try {
+      console.log(">> product.value.id", product.value.id);
       const resp = await fetch(
-        `http://localhost:3001/api/products/${product.id}`,
+        `/api/products/${product.value.id}`,
         {
           method: "PUT",
           body: formData,
@@ -46,8 +37,24 @@ export default function EditProduct(props: { data: any }) {
     }
   };
 
+  const updateState = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    const name = target.name;
+
+    if (name in product.value) {
+      (product.value as any)[name] = target.value;
+    }
+  };
+  const updateFile = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+
+    if (target.files) {
+      file.value = target.files[0];
+    }
+  };
+
   const validateProduct = () => {
-    // const { name, price } = product;
+    // const { name, price } = product.value;
 
     // const valid = !(name.length > 0) || !(price.length > 0);
 
@@ -71,8 +78,8 @@ export default function EditProduct(props: { data: any }) {
             type="text"
             placeholder="Product name"
             name="name"
-            onChange={handleUpdateState}
-            value={product.name}
+            onChange={updateState}
+            value={product.value.name}
           />
         </div>
 
@@ -84,17 +91,17 @@ export default function EditProduct(props: { data: any }) {
             min="0.00"
             step="0.01"
             placeholder="Price"
-            onChange={handleUpdateState}
-            value={product.price}
+            onChange={updateState}
+            value={product.value.price}
           />
         </div>
 
         <div class="campo">
           <label>Image:</label>
-          {product.image
+          {product.value.image
             ? (
               <img
-                src={`http://localhost:3001/${product.image}`}
+                src={`http://localhost:3001/${product.value.image}`}
                 alt="image"
                 width="300"
               />
@@ -104,7 +111,7 @@ export default function EditProduct(props: { data: any }) {
             type="file"
             name="imagen"
             accept="image/*"
-            onChange={handleUpdateFile}
+            onChange={updateFile}
           />
         </div>
 

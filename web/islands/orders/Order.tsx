@@ -1,8 +1,9 @@
-import { useEffect, useState } from "preact/hooks";
+import { useEffect } from "preact/hooks";
+import { Signal } from "@preact/signals";
 
 export default function Order(props: { key: number; data: any }) {
   const { id, customers, orderDetails } = props.data;
-  const [total, setTotal] = useState(0);
+  const total = new Signal(0);
 
   useEffect(() => {
     updateTotal();
@@ -10,7 +11,7 @@ export default function Order(props: { key: number; data: any }) {
 
   const updateTotal = () => {
     if (orderDetails.length === 0) {
-      setTotal(0);
+      total.value = 0;
       return;
     }
 
@@ -19,14 +20,12 @@ export default function Order(props: { key: number; data: any }) {
     orderDetails.map((item: any) =>
       newTotal += item.amount * item.products.price
     );
-    setTotal(newTotal);
+    total.value = newTotal;
   };
 
   const deleteOrder = async (id: number) => {
-    console.log("Eliminando...", id);
-
     if (confirm("Are you sure?")) {
-      const resp = await fetch(`http://localhost:3001/api/orders/${id}`, {
+      const resp = await fetch(`/api/orders/${id}`, {
         method: "DELETE",
       });
       if (resp.status != 200) {

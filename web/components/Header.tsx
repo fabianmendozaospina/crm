@@ -7,7 +7,7 @@ export default function Header(props: { showOptions: boolean }) {
           {props.showOptions &&
             (
               <a
-                href="/api/logout"
+                href="/api/auth/logout"
                 class="btn btn-rojo"
               >
                 <i class="far fa-times-circle"></i>

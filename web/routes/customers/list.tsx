@@ -1,8 +1,8 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import Layout from "../../components/layout/index.tsx";
-import Customer from "../../islands/customers/Customer.tsx";
-import Spinner from "../../components/layout/Spinner.tsx";
 import { getCookies } from "$std/http/cookie.ts";
+import Layout from "../../components/Layout.tsx";
+import Customer from "../../islands/customers/Customer.tsx";
+import Spinner from "../../components/Spinner.tsx";
 
 export const handler: Handlers = {
   async GET(req, ctx) {
@@ -23,7 +23,7 @@ export const handler: Handlers = {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
-          Origin: Deno.env.get("FRONTEND_URL") ?? "",
+          Origin: Deno.env.get("WEB_URL") ?? "",
         },
       });
 
@@ -32,23 +32,24 @@ export const handler: Handlers = {
       }
 
       const data = await resp.json();
-      return await ctx.render(data);
+      return await ctx.render({ customers: data.customers, token });
     } catch (error) {
       // Error with authorization.
-      if (error.response.status == 500) {
-        return new Response("", {
-          status: 307,
-          headers: {
-            Location: "/login",
-          },
-        });
-      }
+      console.log(">> Error", error);
+      //if (error.response.status == 500) {
+      return new Response("", {
+        status: 307,
+        headers: {
+          Location: "/login",
+        },
+      });
+      //}
     }
   },
 };
 
 export default function List({ data }: PageProps) {
-  const { customers } = data;
+  const { customers, token } = data;
 
   // Loading Spinner.
   if (!customers.length) return <Spinner />;

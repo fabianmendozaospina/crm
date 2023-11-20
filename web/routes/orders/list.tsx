@@ -1,8 +1,8 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import Layout from "../../components/layout/index.tsx";
-import Order from "../../islands/orders/Order.tsx";
-import Spinner from "../../components/layout/Spinner.tsx";
 import { getCookies } from "$std/http/cookie.ts";
+import Layout from "../../components/Layout.tsx";
+import Spinner from "../../components/Spinner.tsx";
+import Order from "../../islands/orders/Order.tsx";
 
 export const handler: Handlers = {
   async GET(req, ctx) {
@@ -23,7 +23,7 @@ export const handler: Handlers = {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
-          Origin: Deno.env.get("FRONTEND_URL") ?? "",
+          Origin: Deno.env.get("WEB_URL") ?? "",
         },
       });
 

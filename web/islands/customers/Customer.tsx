@@ -1,11 +1,17 @@
-export default function Customer(props: { key: number; data: any }) {
+export default function Customer(
+  props: {
+    key: number;
+    data: any;
+  },
+) {
   const { id, name, lastName, company, email, phone } = props.data;
 
   const deleteCustomer = async (id: number) => {
     if (confirm("Are you sure?")) {
-      const resp = await fetch(`http://localhost:3001/api/customers/${id}`, {
+      const resp = await fetch(`/api/customers/${id}`, {
         method: "DELETE",
       });
+      console.log(">> resp", resp);
       if (resp.status != 200) {
         const data = await resp.json();
         const { error } = data;
@@ -35,7 +41,7 @@ export default function Customer(props: { key: number; data: any }) {
         <p>Phone: {phone}</p>
       </div>
       <div class="acciones">
-        <a href={`/customers/edit/${id}`} class="btn btn-azul">
+        <a href={`/customers/${id}`} class="btn btn-azul">
           <i class="fas fa-pen"></i>
           Edit Customer
         </a>

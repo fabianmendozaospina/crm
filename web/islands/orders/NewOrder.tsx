@@ -17,7 +17,7 @@ export default function NewOrder(props: { data: any }) {
     e.preventDefault();
 
     const resp = await fetch(
-      `http://localhost:3001/api/products/search/${search}`,
+      `/api/products/search/${search}`,
       {
         method: "POST",
       },

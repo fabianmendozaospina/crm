@@ -4,10 +4,10 @@ import { setCookie } from "$std/http/cookie.ts";
 export const handler: Handlers = {
   async POST(req) {
     const url = new URL(req.url);
-    const form = await req.formData();
+    const formData = await req.formData();
     const credentials = {
-      email: form.get("email"),
-      password: form.get("password"),
+      email: formData.get("email"),
+      password: formData.get("password"),
     };
 
     try {
@@ -16,7 +16,7 @@ export const handler: Handlers = {
         method: "POST",
         body: JSON.stringify(credentials),
         headers: {
-          Origin: Deno.env.get("FRONTEND_URL") ?? "",
+          Origin: Deno.env.get("WEB_URL") ?? "",
         },
       });
 
@@ -25,7 +25,7 @@ export const handler: Handlers = {
         console.log(">> Error al autenticar!");
         headers.set("location", "/");
         return new Response(null, {
-          status: 303, // "See Other"
+          status: 303,
           headers,
         });
       }
@@ -49,7 +49,7 @@ export const handler: Handlers = {
         headers,
       });
     } catch (error) {
-      console.log(">> Ocurrió un error", error);
+      console.log(">> Error", error);
       return new Response(null, {
         status: 403,
       });
