@@ -73,6 +73,7 @@ export default function List({ data }: PageProps) {
               <Product
                 key={product.id}
                 data={product}
+                apiUrl={Deno.env.get("API_URL") ?? ""}
               />
             ))}
           </ul>

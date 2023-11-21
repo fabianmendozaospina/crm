@@ -13,13 +13,13 @@ export default function NewCustomer() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const resp = await fetch("/api/customers", {
+    const resp = await fetch("/api/customers/new", {
       method: "POST",
       body: JSON.stringify(customer.value),
     });
 
     if (resp.status != 201) {
-      alert("Error al Guardar!");
+      alert("Error al Guardar --2");
       return;
     }
 
@@ -109,7 +109,7 @@ export default function NewCustomer() {
             class="btn btn-azul"
             value="Add Customer"
             style={"cursor: pointer"}
-            disabled={validateCustomer()}
+            // disabled={validateCustomer()}
           />
         </div>
       </form>

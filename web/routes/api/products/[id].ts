@@ -14,13 +14,9 @@ export const handler: Handlers = {
       },
     });
 
-    if (resp.status != 200) {
-      console.log(">> Error al eliminar!");
-    }
-
     headers.set("location", "/products/list");
     return new Response(null, {
-      status: 303,
+      status: resp.status,
       headers,
     });
   },
@@ -29,8 +25,6 @@ export const handler: Handlers = {
     const token = getCookies(req.headers).auth;
     const id = ctx.params.id;
     const formData = await req.formData();
-    console.log(">> formData:", formData);
-    //const body = await req.json();
 
     const resp = await fetch(`${Deno.env.get("API_URL")}/api/products/${id}`, {
       method: "PUT",
@@ -41,13 +35,9 @@ export const handler: Handlers = {
       },
     });
 
-    if (resp.status != 200) {
-      console.log(">> Error al guardar!");
-    }
-
     headers.set("location", "/products/list");
     return new Response(null, {
-      status: 303,
+      status: resp.status,
       headers,
     });
   },

@@ -95,7 +95,7 @@ export default function NewOrder(props: { data: any }) {
     e.preventDefault();
 
     const resp = await fetch(
-      `http://localhost:3001/api/orders/${customer.id}`,
+      `/api/orders/${customer.id}`,
       {
         method: "POST",
         body: JSON.stringify(details),

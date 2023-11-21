@@ -27,13 +27,9 @@ export default function NewProduct(props: { token: string }) {
     formData.append("image", file);
 
     try {
-      const resp = await fetch("http://localhost:3001/api/products", {
+      const resp = await fetch("/api/products/new", {
         method: "POST",
         body: formData,
-        headers: {
-          Authorization: `Bearer ${props.token}`,
-          Origin: "http://localhost:8000",
-        },
       });
 
       if (resp.status != 201) {

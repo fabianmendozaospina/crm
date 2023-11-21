@@ -2,7 +2,7 @@ import { Signal } from "@preact/signals";
 import Spinner from "../../components/Spinner.tsx";
 import IProduct from "../../interfaces/IProduct.ts";
 
-export default function EditProduct(props: { data: IProduct }) {
+export default function EditProduct(props: { data: IProduct; apiUrl: string }) {
   const product = new Signal(props.data);
   const file = new Signal<File | null>(null);
 
@@ -101,7 +101,7 @@ export default function EditProduct(props: { data: IProduct }) {
           {product.value.image
             ? (
               <img
-                src={`http://localhost:3001/${product.value.image}`}
+                src={`${props.apiUrl}/${product.value.image}`}
                 alt="image"
                 width="300"
               />

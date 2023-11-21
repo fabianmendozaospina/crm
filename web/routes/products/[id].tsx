@@ -32,6 +32,7 @@ export default function Edit({ data }: PageProps) {
     >
       <EditProduct
         data={product}
+        apiUrl={Deno.env.get("API_URL") ?? ""}
       />
     </Layout>
   );

@@ -1,9 +1,11 @@
-export default function Product(props: { key: number; data: any }) {
+export default function Product(
+  props: { key: number; data: any; apiUrl: string },
+) {
   const { id, name, price, image } = props.data;
 
   const deleteProduct = async (id: number) => {
     if (confirm("Are you sure?")) {
-      const resp = await fetch(`http://localhost:3001/api/products/${id}`, {
+      const resp = await fetch(`/api/products/${id}`, {
         method: "DELETE",
       });
       if (resp.status != 200) {
@@ -29,9 +31,7 @@ export default function Product(props: { key: number; data: any }) {
       <div class="info-producto">
         <p class="nombre">{name}</p>
         <p class="precio">${price}</p>
-        {image
-          ? <img src={`http://localhost:3001/${image}`} alt="image" />
-          : null}
+        {image ? <img src={`${props.apiUrl}/${image}`} alt="image" /> : null}
       </div>
       <div class="acciones">
         <a href={`/products/${id}`} class="btn btn-azul">

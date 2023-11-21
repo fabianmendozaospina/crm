@@ -2,14 +2,13 @@ import { Handlers } from "$fresh/server.ts";
 import { getCookies } from "$std/http/cookie.ts";
 
 export const handler: Handlers = {
-  async POST(req, ctx) {
+  async POST(req, _) {
     const headers = new Headers();
     const token = getCookies(req.headers).auth;
-    const customerId = ctx.params.id;
     const body = await req.json();
 
     const resp = await fetch(
-      `${Deno.env.get("API_URL")}/api/orders/${customerId}`,
+      `${Deno.env.get("API_URL")}/api/customers`,
       {
         method: "POST",
         body: JSON.stringify(body),
@@ -20,13 +19,9 @@ export const handler: Handlers = {
       },
     );
 
-    if (resp.status != 201) {
-      console.log(">> Error al guardar!");
-    }
-
-    headers.set("location", "/orders/list");
+    headers.set("location", "/customers/new");
     return new Response(null, {
-      status: 303,
+      status: resp.status,
       headers,
     });
   },
