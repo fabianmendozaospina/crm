@@ -38,7 +38,11 @@ export default function EditCustomer(props: { data: ICustomer }) {
     return valid;
   };
 
-  if (!customer) return <Spinner />;
+  // if (!customer) return <Spinner />;
+
+  if (!customer) {
+    return <h1>Customer not found</h1>;
+  }
 
   return (
     <>

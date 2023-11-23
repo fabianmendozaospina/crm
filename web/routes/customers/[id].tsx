@@ -5,13 +5,12 @@ import EditCustomer from "../../islands/customers/EditCustomer.tsx";
 
 export const handler: Handlers = {
   async GET(req, ctx) {
-    const id = ctx.params.id;
     const token = getCookies(req.headers).auth;
-    const resp = await fetch(`${Deno.env.get("API_URL")}/api/customers/${id}`, {
+    const id = ctx.params.id;
+    const resp = await fetch(`${Deno.env.get("WEB_URL")}/api/customers/${id}`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token}`,
-        Origin: Deno.env.get("WEB_URL") ?? "",
+        Cookie: `auth=${token}`,
       },
     });
 
@@ -20,12 +19,14 @@ export const handler: Handlers = {
     }
 
     const data = await resp.json();
+
     return await ctx.render(data);
   },
 };
 
 export default function Edit({ data }: PageProps) {
   const { customer } = data;
+
   return (
     <Layout
       showOptions={true}

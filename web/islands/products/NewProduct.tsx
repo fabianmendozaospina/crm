@@ -7,14 +7,14 @@ export default function NewProduct(props: { token: string }) {
   });
   const [file, setFile] = useState("");
 
-  const handleUpdateState = (e: any) => {
+  const updateState = (e: any) => {
     setProduct({
       ...product,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleUpdateFile = (e: any) => {
+  const updateFile = (e: any) => {
     setFile(e.target.files[0]);
   };
 
@@ -64,7 +64,7 @@ export default function NewProduct(props: { token: string }) {
             type="text"
             placeholder="Product name"
             name="name"
-            onChange={handleUpdateState}
+            onChange={updateState}
           />
         </div>
 
@@ -76,7 +76,7 @@ export default function NewProduct(props: { token: string }) {
             min="0.00"
             step="0.01"
             placeholder="Price"
-            onChange={handleUpdateState}
+            onChange={updateState}
           />
         </div>
 
@@ -85,7 +85,7 @@ export default function NewProduct(props: { token: string }) {
           <input
             type="file"
             name="imagen"
-            onChange={handleUpdateFile}
+            onChange={updateFile}
           />
         </div>
 
