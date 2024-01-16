@@ -1,6 +1,5 @@
 import Supabase from "../repository/supabase.ts";
 import { Context, preUploadValidate, upload } from "../../deps.ts";
-import { readLong } from "https://deno.land/std@0.193.0/io/read_long.ts";
 
 const supabase = Supabase.getInstance().client;
 
